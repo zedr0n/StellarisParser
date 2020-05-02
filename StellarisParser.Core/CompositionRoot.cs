@@ -42,6 +42,7 @@ namespace StellarisParser.Core
             // container.AddRegistration(reg);
             
             container.Register<StellarisVisitor<Tech>, TechVisitor>(Lifestyle.Singleton);
+            container.Register<StellarisVisitor<Variables>, VariableVisitor>(Lifestyle.Singleton);
             container.Register<AreaVisitor>(Lifestyle.Singleton);
             container.Register<TierVisitor>(Lifestyle.Singleton);
             // container.Register<StellarisVisitor<string>, AreaVisitor>(Lifestyle.Singleton);

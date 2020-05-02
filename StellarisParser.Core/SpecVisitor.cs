@@ -2,9 +2,7 @@ using Antlr4.Runtime.Tree;
 
 namespace StellarisParser.Core
 {
-    public interface ISpecVisitor {}
-    
-    public abstract class SpecVisitor<T> : StellarisVisitor<T>, ISpecVisitor
+    public abstract class SpecVisitor<T> : StellarisVisitor<T>
     {
         public abstract string SpecId { get; }
         
