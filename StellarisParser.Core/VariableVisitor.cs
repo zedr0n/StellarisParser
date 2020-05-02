@@ -17,7 +17,7 @@ namespace StellarisParser.Core
             }
             return result;
         }
-
+        
         public override Variables VisitKeyval(stellarisParser.KeyvalContext context)
         {
             if (context.key().attrib() == null)

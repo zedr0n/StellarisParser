@@ -61,6 +61,16 @@ namespace StellarisParser.Test
 
             gateway = ship
         }";
+
+        private const string Corvettes = @"tech_corvettes = {
+	        cost = 0
+	        area = engineering
+	        start_tech = yes
+	        category = { voidcraft }
+	        prerequisites = { ""tech_starbase_2"" }
+                tier = 0
+                }
+            }";
             
         private const string Destroyers = @"tech_destroyers = {
 	        cost = @tier2cost1
@@ -139,6 +149,17 @@ namespace StellarisParser.Test
             
             Assert.Equal(2, techs.Count);
             Assert.Equal(4000, techs["tech_destroyers"].Cost);
+        }
+
+        [Fact]
+        public void CanParseFile()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+
+            var techs = parser.ReadFile("../../../../00_eng_tech.txt","../../../../00_scripted_variables.txt");
+            
+            Assert.Equal(80, techs.Count);
         }
     }
 }

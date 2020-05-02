@@ -29,20 +29,26 @@ accessor:
    ;
 
 group: 
-   '{' (expr* | id) '}'
+   '{' (expr* | id*) '}'
    ;
 
 id: 
-   IDENTIFIER | STRING | INTEGER
+   IDENTIFIER | STRING | INTEGER | DOUBLE
    ;
 
 IDENTIFIER: 
    IDENITIFIERHEAD IDENITIFIERBODY*
    ;
 
+DOUBLE:
+   [+-]? INTEGERFRAG PT INTEGERFRAG
+   ;
+
 INTEGER: 
    [+-]? INTEGERFRAG
    ;
+
+PT : '.';
 
 fragment INTEGERFRAG: 
    [0-9]+

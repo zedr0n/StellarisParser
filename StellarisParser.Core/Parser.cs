@@ -1,3 +1,4 @@
+using System.IO;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using SimpleInjector;
@@ -22,6 +23,23 @@ namespace StellarisParser.Core
 
             var visitor = _container.GetInstance<StellarisVisitor<T>>();
             return visitor.VisitContent(context);
+        }
+        
+        public Techs ReadFile(string filename, string baseVars = "")
+        {
+            if (!File.Exists(filename))
+                return null;
+
+            if (baseVars != "" && File.Exists(baseVars))
+            {
+                var varsStr = File.ReadAllText(baseVars);
+                var vars = RunVisitor<Variables>(varsStr);
+                _container.GetInstance<Variables>().Aggregate(vars);
+            }
+            
+            var str = File.ReadAllText(filename);
+            RunVisitor<Variables>(str);
+            return RunVisitor<Techs>(str);
         }
         
         public void RunListeners(string text)
