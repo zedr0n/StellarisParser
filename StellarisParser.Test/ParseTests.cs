@@ -121,9 +121,9 @@ namespace StellarisParser.Test
             var vars = parser.RunVisitor<Variables>(TechCosts);
             variables.Aggregate(vars);
             
-            var tech = parser.RunVisitor<Tech>(Destroyers);
+            var techs = parser.RunVisitor<Techs>(Destroyers);
 
-            Assert.Equal(4000, tech.Cost);
+            Assert.Equal(4000, techs["tech_destroyers"].Cost);
         }
 
         [Fact]
