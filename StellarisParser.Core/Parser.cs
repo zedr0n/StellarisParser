@@ -6,7 +6,7 @@ namespace StellarisParser.Core
 {
     public class Parser
     {
-        private readonly Container _container = new Container();
+        private readonly Container _container;
 
         public T RunVisitor<T>(string text)
         {
@@ -40,10 +40,9 @@ namespace StellarisParser.Core
                 ParseTreeWalker.Default.Walk(listener, context);    
         }
         
-        public Parser()
+        public Parser(Container container)
         {
-            var root = new CompositionRoot();
-            root.ComposeApplication(_container);
+            _container = container;
         }
     }
 }

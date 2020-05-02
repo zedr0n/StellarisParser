@@ -49,7 +49,7 @@ fragment INTEGERFRAG:
    ;
 
 fragment IDENITIFIERHEAD: 
-   ~[@][a-zA-Z]
+   [a-zA-Z]
    ;
 
 fragment IDENITIFIERBODY

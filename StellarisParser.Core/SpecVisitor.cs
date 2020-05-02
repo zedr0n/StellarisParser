@@ -25,9 +25,14 @@ namespace StellarisParser.Core
             if (context.key().id().GetText() != SpecId)
                 return default;
 
-            return GetValue(context.val().id());
+            if (context.val().id() != null)
+                return GetValue(context.val().id());
+            if (context.val().attrib() != null)
+                return GetValue(context.val().attrib());
+            return default;
         }
 
-        public abstract T GetValue(stellarisParser.IdContext context);
+        public virtual T GetValue(stellarisParser.IdContext context) => default;
+        public virtual T GetValue(stellarisParser.AttribContext context) => default;
     }
 }

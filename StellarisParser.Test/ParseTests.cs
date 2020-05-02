@@ -15,14 +15,28 @@ namespace StellarisParser.Test
             container.Verify();
             return container.GetInstance<Parser>();
         }
-        
-        
-        [Fact]
-        public void CanParseSolarPanelNetworks()
-        {
-            var parser = CreateParser();
 
-            var input = @"tech_solar_panel_network = {
+        private Container CreateContainer()
+        {
+            var container = new Container();
+            var root = new CompositionRoot();
+            root.ComposeApplication(container);
+
+            container.Verify();
+            return container;
+        }
+
+
+        private const string TechCosts = @"# TECH COSTS
+                                       @tier1cost1 = 2000
+                                       @tier1cost2 = 2500
+                                       @tier1cost3 = 3000
+
+                                       @tier2cost1 = 4000
+                                       @tier2cost2 = 5000
+                                       @tier2cost3 = 6000";
+
+        private const string SolarPanelNetworks = @"tech_solar_panel_network = {
 	                        area = engineering
 	                        tier = 0
 	                        category = { voidcraft }
@@ -32,8 +46,25 @@ namespace StellarisParser.Test
                             potential = {
                                 is_gestalt = yes
                             }
-                    }";
-            var tech = parser.RunVisitor<Tech>(input);
+                            }";
+
+        private const string Destroyers = @"tech_destroyers = {
+	        cost = @tier2cost1
+	        area = engineering
+	        tier = 2
+	        category = { voidcraft }
+	        prerequisites = { ""tech_corvettes"" }
+            weight = @tier2weight1
+
+            gateway = ship
+        }";
+        
+        [Fact]
+        public void CanParseSolarPanelNetworks()
+        {
+            var parser = CreateParser();
+            
+            var tech = parser.RunVisitor<Tech>(SolarPanelNetworks);
             
             Assert.Equal("tech_solar_panel_network", tech.Name);
             Assert.Equal("engineering", tech.Area);
@@ -44,16 +75,26 @@ namespace StellarisParser.Test
         public void CanParseVariables()
         {
             var parser = CreateParser();
-            
-            var input = @"# TECH COSTS
-                          @tier1cost1 = 2000
-                          @tier1cost2 = 2500
-                          @tier1cost3 = 3000";
 
-            var vars = parser.RunVisitor<Variables>(input);
+            var vars = parser.RunVisitor<Variables>(TechCosts);
             
-            Assert.Equal(3, vars.Map.Count);
-            Assert.Equal(2500, vars.Map["tier1cost2"]);
+            Assert.Equal(3, vars.Count);
+            Assert.Equal(2500, vars.Get("tier1cost2"));
+        }
+
+        [Fact]
+        public void CanParseTechWithVariables()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+            var variables = container.GetInstance<Variables>();
+            
+            var vars = parser.RunVisitor<Variables>(TechCosts);
+            variables.Aggregate(vars);
+            
+            var tech = parser.RunVisitor<Tech>(Destroyers);
+
+            Assert.Equal(4000, tech.Cost);
         }
     }
 }

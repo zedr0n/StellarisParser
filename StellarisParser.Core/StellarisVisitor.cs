@@ -1,10 +1,11 @@
 using Antlr4.Runtime;
+using Antlr4.Runtime.Misc;
 
 namespace StellarisParser.Core
 {
     public class StellarisVisitor<T> : stellarisBaseVisitor<T>
     {
-        protected int Level(RuleContext context)
+        public int Level(RuleContext context)
         {
             var lvl = 0;
             var parent = context.Parent;

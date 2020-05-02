@@ -26,7 +26,9 @@ namespace StellarisParser.Core
             var val = double.Parse(context.val().id().GetText());
 
             var variable = new Variable<double>(context.key().attrib().id().GetText(), val);
-            return new Variables(variable);
+            var vars = new Variables();
+            vars.Add(variable);
+            return vars;
         }
     }
 }
