@@ -21,7 +21,7 @@ val:
    ;
 
 attrib: 
-   id accessor (attrib| id)
+   accessor (attrib| id)
    ;
 
 accessor: 
