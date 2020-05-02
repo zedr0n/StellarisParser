@@ -163,5 +163,17 @@ namespace StellarisParser.Test
             var tech = techs["tech_destroyers"];
             Assert.Equal("tech_corvettes", tech.Prerequisites.Single().Name);
         }
+
+        [Fact]
+        public void CanSerialiseGraph()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+
+            var techs = parser.ReadFile("../../../../00_eng_tech.txt","../../../../00_scripted_variables.txt");
+            var graph = container.GetInstance<Graph>();
+            graph.Populate();
+            graph.Serialise(nameof(CanSerialiseGraph));
+        }
     }
 }

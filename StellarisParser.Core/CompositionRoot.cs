@@ -28,6 +28,7 @@ namespace StellarisParser.Core
             container.Register<PrereqVisitor>(Lifestyle.Singleton);
             container.Register<Variables>(Lifestyle.Singleton);
             container.Register<Techs>(Lifestyle.Singleton);
+            container.Register<Graph>(Lifestyle.Singleton);
 
             container.Register<Parser>();
         }

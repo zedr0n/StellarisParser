@@ -40,9 +40,10 @@ namespace StellarisParser.Core
             var str = File.ReadAllText(filename);
             RunVisitor<Variables>(str);
             // run parser twice to process prerequisites
-            var techs = RunVisitor<Techs>(str);
-            _container.GetInstance<Techs>().Aggregate(techs);
-            return RunVisitor<Techs>(str);
+            var techs = _container.GetInstance<Techs>();
+            techs.Aggregate(RunVisitor<Techs>(str));
+            techs.Aggregate(RunVisitor<Techs>(str));
+            return techs;
         }
         
         public void RunListeners(string text)
