@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StellarisParser.Core
 {
@@ -21,6 +22,8 @@ namespace StellarisParser.Core
 
         public int Count => Map.Count;
 
-        public Tech this[string key] => Map[key];
+        public Tech this[string key] => Map.ContainsKey(key) ? Map[key] : null;
+
+        public List<Tech> ToList() => Map.Values.ToList();
     }
 }

@@ -160,6 +160,8 @@ namespace StellarisParser.Test
             var techs = parser.ReadFile("../../../../00_eng_tech.txt","../../../../00_scripted_variables.txt");
             
             Assert.Equal(80, techs.Count);
+            var tech = techs["tech_destroyers"];
+            Assert.Equal("tech_corvettes", tech.Prerequisites.Single().Name);
         }
     }
 }

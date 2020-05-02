@@ -10,6 +10,6 @@ namespace StellarisParser.Core
         public int Tier { get; set; }
         public int Cost { get; set; }
         public List<string> Category { get; } = new List<string>();
-        public List<Tech> Prerequisites { get; } = new List<Tech>();
+        public List<Tech> Prerequisites { get; set; } = new List<Tech>();
     }
 }

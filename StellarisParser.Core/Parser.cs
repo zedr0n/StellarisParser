@@ -39,6 +39,9 @@ namespace StellarisParser.Core
             
             var str = File.ReadAllText(filename);
             RunVisitor<Variables>(str);
+            // run parser twice to process prerequisites
+            var techs = RunVisitor<Techs>(str);
+            _container.GetInstance<Techs>().Aggregate(techs);
             return RunVisitor<Techs>(str);
         }
         

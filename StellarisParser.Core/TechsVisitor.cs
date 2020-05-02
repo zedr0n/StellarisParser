@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Antlr4.Runtime.Tree;
 
 namespace StellarisParser.Core
@@ -7,12 +8,14 @@ namespace StellarisParser.Core
         private readonly AreaVisitor _areaVisitor;
         private readonly TierVisitor _tierVisitor;
         private readonly CostVisitor _costVisitor;
+        private readonly PrereqVisitor _prereqVisitor;
 
-        public TechsVisitor(AreaVisitor areaVisitor, TierVisitor tierVisitor, CostVisitor costVisitor)
+        public TechsVisitor(AreaVisitor areaVisitor, TierVisitor tierVisitor, CostVisitor costVisitor, PrereqVisitor prereqVisitor)
         {
             _areaVisitor = areaVisitor;
             _tierVisitor = tierVisitor;
             _costVisitor = costVisitor;
+            _prereqVisitor = prereqVisitor;
         }
         
         public override Techs VisitChildren(IRuleNode node)
@@ -42,13 +45,15 @@ namespace StellarisParser.Core
             var area = _areaVisitor.Visit(context.val());
             var tier = _tierVisitor.Visit(context.val());
             var cost = _costVisitor.Visit(context.val());
-
+            var prereqs = _prereqVisitor.Visit(context.val());
+            
             var tech = new Tech
             {
                 Name = id,
                 Area = area,
                 Tier = tier,
-                Cost = (int) cost
+                Cost = (int) cost,
+                Prerequisites = prereqs?.ToList() ?? new List<Tech>()
             };
 
             var techs = new Techs();
