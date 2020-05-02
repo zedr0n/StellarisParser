@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StellarisParser.Console", "StellarisParser.Console\StellarisParser.Console.csproj", "{5DCEA2AA-8849-4760-9C2C-B012571D28B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StellarisParser.Core", "StellarisParser.Core\StellarisParser.Core.csproj", "{F171BB60-7761-4156-AF97-FDD4347D7EA0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5DCEA2AA-8849-4760-9C2C-B012571D28B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DCEA2AA-8849-4760-9C2C-B012571D28B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DCEA2AA-8849-4760-9C2C-B012571D28B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DCEA2AA-8849-4760-9C2C-B012571D28B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F171BB60-7761-4156-AF97-FDD4347D7EA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F171BB60-7761-4156-AF97-FDD4347D7EA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F171BB60-7761-4156-AF97-FDD4347D7EA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F171BB60-7761-4156-AF97-FDD4347D7EA0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
