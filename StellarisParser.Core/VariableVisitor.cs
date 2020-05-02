@@ -20,7 +20,7 @@ namespace StellarisParser.Core
 
         public override Variables VisitKeyval(stellarisParser.KeyvalContext context)
         {
-            if (context.key().attrib().IsEmpty)
+            if (context.key().attrib() == null)
                 return null;
 
             var val = double.Parse(context.val().id().GetText());

@@ -20,7 +20,7 @@ namespace StellarisParser.Core
     {
         public virtual void ComposeApplication(Container container)
         {
-            container.Register<StellarisVisitor<Tech>, TechVisitor>(Lifestyle.Singleton);
+            container.Register<StellarisVisitor<Techs>, TechsVisitor>(Lifestyle.Singleton);
             container.Register<StellarisVisitor<Variables>, VariableVisitor>(Lifestyle.Singleton);
             container.Register<AreaVisitor>(Lifestyle.Singleton);
             container.Register<TierVisitor>(Lifestyle.Singleton);

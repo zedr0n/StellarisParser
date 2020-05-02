@@ -1,3 +1,4 @@
+using System.Linq;
 using SimpleInjector;
 using StellarisParser.Core;
 using Xunit;
@@ -45,9 +46,22 @@ namespace StellarisParser.Test
 
                             potential = {
                                 is_gestalt = yes
-                            }
-                            }";
+                            } 
+                        }";
 
+        private const string DestroyersWithTechCosts = @"@tier2cost1 = 4000
+
+            tech_destroyers = {
+	        cost = @tier2cost1
+	        area = engineering
+	        tier = 2
+	        category = { voidcraft }
+	        prerequisites = { ""tech_corvettes"" }
+            weight = @tier2weight1
+
+            gateway = ship
+        }";
+            
         private const string Destroyers = @"tech_destroyers = {
 	        cost = @tier2cost1
 	        area = engineering
@@ -64,7 +78,7 @@ namespace StellarisParser.Test
         {
             var parser = CreateParser();
             
-            var tech = parser.RunVisitor<Tech>(SolarPanelNetworks);
+            var tech = parser.RunVisitor<Techs>(SolarPanelNetworks).Map.First().Value;
             
             Assert.Equal("tech_solar_panel_network", tech.Name);
             Assert.Equal("engineering", tech.Area);
@@ -78,12 +92,27 @@ namespace StellarisParser.Test
 
             var vars = parser.RunVisitor<Variables>(TechCosts);
             
-            Assert.Equal(3, vars.Count);
+            Assert.Equal(6, vars.Count);
             Assert.Equal(2500, vars.Get("tier1cost2"));
         }
 
         [Fact]
         public void CanParseTechWithVariables()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+            var variables = container.GetInstance<Variables>();
+            
+            var vars = parser.RunVisitor<Variables>(DestroyersWithTechCosts);
+            variables.Aggregate(vars);
+            
+            var tech = parser.RunVisitor<Techs>(DestroyersWithTechCosts).Map.First().Value;
+
+            Assert.Equal(4000, tech.Cost);
+        }
+
+        [Fact]
+        public void CanParseTechWithSeparateVariables()
         {
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
@@ -95,6 +124,21 @@ namespace StellarisParser.Test
             var tech = parser.RunVisitor<Tech>(Destroyers);
 
             Assert.Equal(4000, tech.Cost);
+        }
+
+        [Fact]
+        public void CanParseMultipleTechs()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+            var variables = container.GetInstance<Variables>();
+
+            var str = DestroyersWithTechCosts + "\n" + SolarPanelNetworks;
+            variables.Aggregate(parser.RunVisitor<Variables>(str));
+            var techs = parser.RunVisitor<Techs>(str);
+            
+            Assert.Equal(2, techs.Count);
+            Assert.Equal(4000, techs["tech_destroyers"].Cost);
         }
     }
 }
