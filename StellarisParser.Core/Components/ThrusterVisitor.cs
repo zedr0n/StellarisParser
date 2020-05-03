@@ -2,14 +2,16 @@ namespace StellarisParser.Core.Components
 {
     public class ThrusterVisitor : ComponentVisitor, IStellarisVisitor<Thruster>
     {
+        private readonly ComponentSetVisitor _componentSetVisitor;
         private readonly ModifierVisitor<EvasionVisitor> _evationVisitor;
         private readonly ModifierVisitor<SpeedVisitor> _speedVisitor;
         
-        public ThrusterVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ModifierVisitor<EvasionVisitor> evationVisitor, ModifierVisitor<SpeedVisitor> speedVisitor) 
+        public ThrusterVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ModifierVisitor<EvasionVisitor> evationVisitor, ModifierVisitor<SpeedVisitor> speedVisitor, ComponentSetVisitor componentSetVisitor) 
             : base(keyVisitor, powerVisitor, prereqVisitor)
         {
             _evationVisitor = evationVisitor;
             _speedVisitor = speedVisitor;
+            _componentSetVisitor = componentSetVisitor;
         }
 
         public override Component VisitKeyval(stellarisParser.KeyvalContext context)
@@ -18,6 +20,10 @@ namespace StellarisParser.Core.Components
             if (component == null)
                 return null;
 
+            var componentsSet = _componentSetVisitor.Visit(context.val()).Replace('"'.ToString(),"");
+            if (componentsSet != Specs.THRUSTER_SET)
+                return null;
+            
             var evasion = _evationVisitor.Visit(context.val());
             var speed = _speedVisitor.Visit(context.val());
             

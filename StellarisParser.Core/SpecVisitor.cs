@@ -32,7 +32,6 @@ namespace StellarisParser.Core
             return default;
         }
 
-        public virtual T GetValue(string val) => default;
         public virtual T GetValue(stellarisParser.IdContext context) => default;
         public virtual T GetValue(stellarisParser.AttribContext context) => default;
     }

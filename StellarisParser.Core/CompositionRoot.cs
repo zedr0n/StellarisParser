@@ -37,6 +37,7 @@ namespace StellarisParser.Core
             container.Register<ModifierVisitor<SpeedVisitor>>(Lifestyle.Singleton);
             container.Register<EvasionVisitor>(Lifestyle.Singleton);
             container.Register<SpeedVisitor>(Lifestyle.Singleton);
+            container.Register<ComponentSetVisitor>(Lifestyle.Singleton);
             
             container.Register<Variables>(Lifestyle.Singleton);
             container.Register<Techs>(Lifestyle.Singleton);
