@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using SimpleInjector;
+using StellarisParser.Core.Components;
 
 namespace StellarisParser.Core
 {
@@ -23,14 +24,19 @@ namespace StellarisParser.Core
             container.Register<StellarisVisitor<Techs>, TechsVisitor>(Lifestyle.Singleton);
             container.Register<StellarisVisitor<Variables>, VariableVisitor>(Lifestyle.Singleton);
             container.Register<StellarisVisitor<ModDescriptor>, DescriptorVisitor>(Lifestyle.Singleton);
+            container.Register<StellarisVisitor<Component>, ComponentVisitor>(Lifestyle.Singleton);
+            
             container.Register<AreaVisitor>(Lifestyle.Singleton);
             container.Register<TierVisitor>(Lifestyle.Singleton);
             container.Register<CostVisitor>(Lifestyle.Singleton);
             container.Register<PrereqVisitor>(Lifestyle.Singleton);
+            container.Register<KeyVisitor>(Lifestyle.Singleton);
+            container.Register<PowerVisitor>(Lifestyle.Singleton);
+            
             container.Register<Variables>(Lifestyle.Singleton);
             container.Register<Techs>(Lifestyle.Singleton);
             container.Register<Graph>(Lifestyle.Singleton);
-
+            
             container.Register<Parser>(Lifestyle.Singleton);
             container.Register<Mods>(Lifestyle.Singleton);
         }

@@ -3,7 +3,7 @@ using Antlr4.Runtime.Misc;
 
 namespace StellarisParser.Core
 {
-    public class StellarisVisitor<T> : stellarisBaseVisitor<T>
+    public abstract class StellarisVisitor<T> : stellarisBaseVisitor<T>
     {
         public int Level(RuleContext context)
         {

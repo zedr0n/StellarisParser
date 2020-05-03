@@ -1,7 +1,9 @@
+using System.ComponentModel;
 using System.Linq;
-using SimpleInjector;
 using StellarisParser.Core;
 using Xunit;
+using Component = StellarisParser.Core.Components.Component;
+using Container = SimpleInjector.Container;
 
 namespace StellarisParser.Test
 {
@@ -83,6 +85,33 @@ namespace StellarisParser.Test
             gateway = ship
         }";
         
+        private const string Thruster = @"utility_component_template = {
+	key = ""DESTROYER_SHIP_THRUSTER_1""
+        size = small
+            icon = ""GFX_ship_part_thruster_1""
+        icon_frame = 1
+        power = @destroyer_power_1
+            resources = {
+                category = ship_components
+                cost = {
+                alloys = @destroyer_cost1
+                }
+            }
+	
+        modifier = {
+        }
+		
+        prerequisites = { ""tech_thrusters_1"" }
+        component_set = ""thruster_components""
+        size_restriction = { destroyer }
+        upgrades_to = ""DESTROYER_SHIP_THRUSTER_2""
+	
+        ai_weight = {
+            weight = 1
+        }
+    }
+    ";
+
         [Fact]
         public void CanParseSolarPanelNetworks()
         {
@@ -174,6 +203,20 @@ namespace StellarisParser.Test
             var graph = container.GetInstance<Graph>();
             graph.Populate();
             graph.Serialise(nameof(CanSerialiseGraph));
+        }
+
+        [Fact]
+        public void CanParseComponent()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+            parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            parser.ReadVars(Specs.BASE_PATH + "\\common\\component_templates\\00_utilities_thrusters.txt");
+            //parser.ReadVars("../../../../00_scripted_variables.txt");
+
+            var component = parser.RunVisitor<Component>(Thruster);
+            Assert.Equal(-20, component.Power);
+            Assert.Single(component.Prerequisites);
         }
     }
 }
