@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Microsoft.EntityFrameworkCore.Internal;
 using QuickGraph;
 using QuickGraph.Serialization;
 
@@ -9,13 +10,15 @@ namespace StellarisParser.Core
     public class Graph
     {
         private readonly Techs _techs;
+        private readonly Mods _mods;
 
         private readonly BidirectionalGraph<Vertex, SEdge<Vertex>> _graph
             = new BidirectionalGraph<Vertex, SEdge<Vertex>>();
 
-        public Graph(Techs techs)
+        public Graph(Techs techs, Mods mods)
         {
             _techs = techs;
+            _mods = mods;
         }
 
         public class Vertex
@@ -23,6 +26,9 @@ namespace StellarisParser.Core
             [XmlAttribute("Id")]
             public string Id { get; set; }
 
+            [XmlAttribute("Name")]
+            public string Name { get; set; }
+            
             [XmlAttribute("Label")]
             public string Label { get; set; }
 
@@ -43,7 +49,11 @@ namespace StellarisParser.Core
         private string GetSource(string source)
         {
             if (source.StartsWith(Specs.BASE_PATH))
-                source = "StellarisBase";
+                return "StellarisBase";
+
+            var modDescriptor = _mods.Map.SingleOrDefault(x => source.StartsWith(x.Key)).Value;
+            if (modDescriptor != default)
+                return modDescriptor.Name;
 
             return source;
         }
@@ -61,7 +71,8 @@ namespace StellarisParser.Core
             var vertex = new Vertex
             {
                 Id = tech.Name,
-                Label = GetTechName(tech.Name),
+                Name = tech.Name,
+                Label = $"[{tech.Tier}]{GetTechName(tech.Name)}",
                 Cost = tech.Cost,
                 Tier = tech.Tier,
                 Source = GetSource(tech.Source),

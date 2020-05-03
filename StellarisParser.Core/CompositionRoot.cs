@@ -22,6 +22,7 @@ namespace StellarisParser.Core
         {
             container.Register<StellarisVisitor<Techs>, TechsVisitor>(Lifestyle.Singleton);
             container.Register<StellarisVisitor<Variables>, VariableVisitor>(Lifestyle.Singleton);
+            container.Register<StellarisVisitor<ModDescriptor>, DescriptorVisitor>(Lifestyle.Singleton);
             container.Register<AreaVisitor>(Lifestyle.Singleton);
             container.Register<TierVisitor>(Lifestyle.Singleton);
             container.Register<CostVisitor>(Lifestyle.Singleton);
@@ -31,6 +32,7 @@ namespace StellarisParser.Core
             container.Register<Graph>(Lifestyle.Singleton);
 
             container.Register<Parser>(Lifestyle.Singleton);
+            container.Register<Mods>(Lifestyle.Singleton);
         }
     }
 }

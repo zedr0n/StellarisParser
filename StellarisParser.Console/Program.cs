@@ -17,6 +17,7 @@ namespace StellarisParser.Console
         }; 
         
         private static Parser _parser;
+        private static Mods _mods;
 
         private static void ReadTech(string file)
         {
@@ -82,15 +83,11 @@ namespace StellarisParser.Console
             if (Directory.Exists(modDir))
             {
                 var descriptor = modDir + "\\descriptor.mod";
-                var source = string.Empty;
                 if (File.Exists(descriptor))
                 {
-                    var props = _parser.RunVisitor<Variables>(File.ReadAllText(descriptor));
-                    source = props.GetString("Name");
+                    var desc = _parser.RunVisitor<ModDescriptor>(File.ReadAllText(descriptor));
+                    _mods.Map.Add(modDir, desc);
                 }
-                
-                if (source != string.Empty)
-                    System.Console.WriteLine("Reading data from " + source);
                 
                 var varsDir = modDir + "\\common\\scripted_variables";
                 if (Directory.Exists(varsDir))
@@ -116,13 +113,14 @@ namespace StellarisParser.Console
             root.ComposeApplication(container);
 
             _parser = container.GetInstance<Parser>();
+            _mods = container.GetInstance<Mods>();
             _parser.ReadVars(BASE_VARS);
 
             System.Console.WriteLine("Reading base techs...");
             ReadAllTechs(TECH_PATH);
-            
-            if (args.Length > 0)
-                ReadMod(args[0]);
+
+            foreach (var d in args)
+                ReadMod(d);
             
             var graph = container.GetInstance<Graph>();
             graph.Populate();
