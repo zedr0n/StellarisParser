@@ -25,7 +25,7 @@ namespace StellarisParser.Core
 
             var context = parser.content();
 
-            var visitor = _container.GetInstance<StellarisVisitor<T>>();
+            var visitor = _container.GetInstance<IStellarisVisitor<T>>();
             return visitor.VisitContent(context);
         }
         

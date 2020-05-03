@@ -21,10 +21,11 @@ namespace StellarisParser.Core
     {
         public virtual void ComposeApplication(Container container)
         {
-            container.Register<StellarisVisitor<Techs>, TechsVisitor>(Lifestyle.Singleton);
-            container.Register<StellarisVisitor<Variables>, VariableVisitor>(Lifestyle.Singleton);
-            container.Register<StellarisVisitor<ModDescriptor>, DescriptorVisitor>(Lifestyle.Singleton);
-            container.Register<StellarisVisitor<Component>, ComponentVisitor>(Lifestyle.Singleton);
+            container.Register<IStellarisVisitor<Techs>, TechsVisitor>(Lifestyle.Singleton);
+            container.Register<IStellarisVisitor<Variables>, VariableVisitor>(Lifestyle.Singleton);
+            container.Register<IStellarisVisitor<ModDescriptor>, DescriptorVisitor>(Lifestyle.Singleton);
+            container.Register<IStellarisVisitor<Component>, ComponentVisitor>(Lifestyle.Singleton);
+            container.Register<IStellarisVisitor<Thruster>, ThrusterVisitor>(Lifestyle.Singleton);
             
             container.Register<AreaVisitor>(Lifestyle.Singleton);
             container.Register<TierVisitor>(Lifestyle.Singleton);
@@ -32,6 +33,10 @@ namespace StellarisParser.Core
             container.Register<PrereqVisitor>(Lifestyle.Singleton);
             container.Register<KeyVisitor>(Lifestyle.Singleton);
             container.Register<PowerVisitor>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<EvasionVisitor>>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<SpeedVisitor>>(Lifestyle.Singleton);
+            container.Register<EvasionVisitor>(Lifestyle.Singleton);
+            container.Register<SpeedVisitor>(Lifestyle.Singleton);
             
             container.Register<Variables>(Lifestyle.Singleton);
             container.Register<Techs>(Lifestyle.Singleton);
@@ -42,3 +47,4 @@ namespace StellarisParser.Core
         }
     }
 }
+

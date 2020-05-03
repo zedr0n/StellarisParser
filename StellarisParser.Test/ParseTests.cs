@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Linq;
 using StellarisParser.Core;
+using StellarisParser.Core.Components;
 using Xunit;
 using Component = StellarisParser.Core.Components.Component;
 using Container = SimpleInjector.Container;
@@ -99,6 +100,8 @@ namespace StellarisParser.Test
             }
 	
         modifier = {
+            		ship_base_speed_mult = 0.25
+		            ship_evasion_add = 3
         }
 		
         prerequisites = { ""tech_thrusters_1"" }
@@ -217,6 +220,9 @@ namespace StellarisParser.Test
             var component = parser.RunVisitor<Component>(Thruster);
             Assert.Equal(-20, component.Power);
             Assert.Single(component.Prerequisites);
+            
+            var thruster = parser.RunVisitor<Thruster>(Thruster);
+            Assert.Equal(3, thruster.Evasion);
         }
     }
 }

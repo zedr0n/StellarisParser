@@ -8,6 +8,9 @@ namespace StellarisParser.Core
         public const string PREREQ_ID = "prerequisites";
         public const string KEY_ID = "key";
         public const string POWER_ID = "power";
+        public const string EVASION_ID = "ship_evasion_add";
+        public const string SPEED_ID = "ship_base_speed_mult";
+        public const string MODIFIER_ID = "modifier";
         
         public const string BASE_PATH = "f:\\steam\\steamapps\\common\\Stellaris";
         public const string BASE_VARS = BASE_PATH + "\\common\\scripted_variables\\00_scripted_variables.txt";
