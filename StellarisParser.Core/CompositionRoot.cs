@@ -26,6 +26,7 @@ namespace StellarisParser.Core
             container.Register<IStellarisVisitor<ModDescriptor>, DescriptorVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<Component>, ComponentVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<Thruster>, ThrusterVisitor>(Lifestyle.Singleton);
+            container.Register<IStellarisVisitor<Components.Components>, ComponentsVisitor>(Lifestyle.Singleton);
             
             container.Register<AreaVisitor>(Lifestyle.Singleton);
             container.Register<TierVisitor>(Lifestyle.Singleton);
@@ -38,10 +39,12 @@ namespace StellarisParser.Core
             container.Register<EvasionVisitor>(Lifestyle.Singleton);
             container.Register<SpeedVisitor>(Lifestyle.Singleton);
             container.Register<ComponentSetVisitor>(Lifestyle.Singleton);
+            container.Register<ThrusterVisitor>(Lifestyle.Singleton);
             
             container.Register<Variables>(Lifestyle.Singleton);
             container.Register<Techs>(Lifestyle.Singleton);
             container.Register<Graph>(Lifestyle.Singleton);
+            container.Register<Components.Components>(Lifestyle.Singleton);
             
             container.Register<Parser>(Lifestyle.Singleton);
             container.Register<Mods>(Lifestyle.Singleton);

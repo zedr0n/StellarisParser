@@ -11,6 +11,7 @@ namespace StellarisParser.Core
         private readonly Container _container;
         private readonly Variables _vars;
         private readonly Techs _techs;
+        private readonly Components.Components _components;
         public string CurrentSource { get; private set; }
 
         public T RunVisitor<T>(string text)
@@ -42,6 +43,14 @@ namespace StellarisParser.Core
             return ReadTechs(filename);
         }
 
+        public Components.Components ReadComponents(string file)
+        {
+            CurrentSource = file;
+            _vars.Aggregate(RunVisitor<Variables>(File.ReadAllText(file)));
+            _components.Aggregate(RunVisitor<Components.Components>(File.ReadAllText(file)));
+            return _components;
+        }
+        
         public Techs ReadTechs(string file)
         {
             CurrentSource = file;
@@ -73,11 +82,12 @@ namespace StellarisParser.Core
                 ParseTreeWalker.Default.Walk(listener, context);    
         }
 
-        public Parser(Container container, Variables vars, Techs techs)
+        public Parser(Container container, Variables vars, Techs techs, Components.Components components)
         {
             _container = container;
             _vars = vars;
             _techs = techs;
+            _components = components;
         }
     }
 }

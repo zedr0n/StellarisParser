@@ -224,5 +224,17 @@ namespace StellarisParser.Test
             var thruster = parser.RunVisitor<Thruster>(Thruster);
             Assert.Equal(3, thruster.Evasion);
         }
+        
+        [Fact]
+        public void CanParseComponents()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+            parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            parser.ReadComponents(Specs.BASE_PATH + "\\common\\component_templates\\00_utilities_thrusters.txt");
+
+            var components = container.GetInstance<Components>();
+            Assert.Equal(30, components.Count);
+        }
     }
 }
