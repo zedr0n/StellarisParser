@@ -3,15 +3,14 @@ namespace StellarisParser.Core.Components
     public class ThrusterVisitor : ComponentVisitor, IStellarisVisitor<Thruster>
     {
         private readonly ComponentSetVisitor _componentSetVisitor;
-        private readonly ModifierVisitor<EvasionVisitor> _evationVisitor;
+        private readonly ModifierVisitor<EvasionVisitor> _evasionVisitor;
         private readonly ModifierVisitor<SpeedVisitor> _speedVisitor;
-        
-        public ThrusterVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ModifierVisitor<EvasionVisitor> evationVisitor, ModifierVisitor<SpeedVisitor> speedVisitor, ComponentSetVisitor componentSetVisitor) 
-            : base(keyVisitor, powerVisitor, prereqVisitor)
+
+        public ThrusterVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, Parser parser, ComponentSetVisitor componentSetVisitor, ModifierVisitor<EvasionVisitor> evasionVisitor, ModifierVisitor<SpeedVisitor> speedVisitor) : base(keyVisitor, powerVisitor, prereqVisitor, parser)
         {
-            _evationVisitor = evationVisitor;
-            _speedVisitor = speedVisitor;
             _componentSetVisitor = componentSetVisitor;
+            _evasionVisitor = evasionVisitor;
+            _speedVisitor = speedVisitor;
         }
 
         public override Component VisitKeyval(stellarisParser.KeyvalContext context)
@@ -24,7 +23,7 @@ namespace StellarisParser.Core.Components
             if (componentsSet != Specs.THRUSTER_SET)
                 return null;
             
-            var evasion = _evationVisitor.Visit(context.val());
+            var evasion = _evasionVisitor.Visit(context.val());
             var speed = _speedVisitor.Visit(context.val());
             
             return new Thruster
@@ -33,7 +32,8 @@ namespace StellarisParser.Core.Components
                 Evasion = evasion,
                 Power = component.Power,
                 Prerequisites = component.Prerequisites,
-                SpeedMultipler = speed
+                SpeedMultipler = speed,
+                Source = component.Source
             };
         }
 
@@ -41,5 +41,6 @@ namespace StellarisParser.Core.Components
         {
             return (Thruster) base.VisitContent(context);
         }
+
     }
 }

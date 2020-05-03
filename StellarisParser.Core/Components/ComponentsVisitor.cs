@@ -36,7 +36,8 @@ namespace StellarisParser.Core.Components
 
             var components = new Components();
             var thruster = _thrusterVisitor.Visit(context);
-            components.Add(thruster);
+            if (thruster != null)
+                components.Add(thruster);
             return components;
         }
     }

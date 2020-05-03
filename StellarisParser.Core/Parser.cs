@@ -43,12 +43,11 @@ namespace StellarisParser.Core
             return ReadTechs(filename);
         }
 
-        public Components.Components ReadComponents(string file)
+        public void ReadComponents(string file)
         {
             CurrentSource = file;
             _vars.Aggregate(RunVisitor<Variables>(File.ReadAllText(file)));
             _components.Aggregate(RunVisitor<Components.Components>(File.ReadAllText(file)));
-            return _components;
         }
         
         public Techs ReadTechs(string file)

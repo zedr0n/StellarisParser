@@ -13,7 +13,8 @@ namespace StellarisParser.Console
 
         public static readonly List<string> Excludes = new List<string>
         {
-            TECH_PATH + "\\00_repeatable.txt"
+            TECH_PATH + "\\00_repeatable.txt",
+            COMPONENT_PATH + "\\README_weapon_component_stat_docs.txt"
         }; 
         
         private static Parser _parser;
@@ -22,6 +23,9 @@ namespace StellarisParser.Console
         private static void ReadTech(string file)
         {
             if (Excludes.Contains(file))
+                return;
+
+            if (!file.EndsWith(".txt"))
                 return;
             
             if (File.Exists(file))
@@ -47,12 +51,45 @@ namespace StellarisParser.Console
                 System.Console.WriteLine(file + " not found!");
         }
         
+        private static void ReadComponents(string file)
+        {
+            if (Excludes.Contains(file))
+                return;
+            
+            if (!file.EndsWith(".txt"))
+                return;
+
+            if (File.Exists(file))
+            {
+                try
+                {
+                    System.Console.Write("Reading " + file + "...");
+                    
+                    _parser.ReadComponents(file);
+                    System.Console.WriteLine(" OK!");
+                    
+                }
+                catch (Exception e)
+                {
+                    System.Console.WriteLine(" Error!");
+                }
+            }
+            else 
+                System.Console.WriteLine(file + " not found!");
+        }
+        
         private static void ReadTechs(string directory)
         {
             foreach (var file in Directory.GetFiles(directory))
                 ReadTech(file);
         }
-
+        
+        private static void ReadAllComponents(string directory)
+        {
+            foreach (var file in Directory.GetFiles(directory))
+                ReadComponents(file);
+        }
+        
         private static void ReadAllTechs(string directory)
         {
             // reading twice to process all prerequisites
@@ -95,8 +132,10 @@ namespace StellarisParser.Console
                 var techDir = modDir + "\\common\\technology";
                 if (Directory.Exists(techDir))
                     ReadAllTechs(techDir);
+                var componentDir = modDir + "\\common\\component_templates";
+                if (Directory.Exists(componentDir))
+                    ReadAllComponents(componentDir);
             }
-
         }
         
         static void Main(string[] args)
@@ -118,6 +157,8 @@ namespace StellarisParser.Console
 
             System.Console.WriteLine("Reading base techs...");
             ReadAllTechs(TECH_PATH);
+            System.Console.WriteLine("Reading base components...");
+            ReadAllComponents(COMPONENT_PATH);
 
             foreach (var d in args)
                 ReadMod(d);

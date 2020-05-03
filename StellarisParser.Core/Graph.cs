@@ -4,21 +4,24 @@ using System.Xml.Serialization;
 using Microsoft.EntityFrameworkCore.Internal;
 using QuickGraph;
 using QuickGraph.Serialization;
+using StellarisParser.Core.Components;
 
 namespace StellarisParser.Core
 {
     public class Graph
     {
         private readonly Techs _techs;
+        private readonly Components.Components _components;
         private readonly Mods _mods;
 
         private readonly BidirectionalGraph<Vertex, SEdge<Vertex>> _graph
             = new BidirectionalGraph<Vertex, SEdge<Vertex>>();
 
-        public Graph(Techs techs, Mods mods)
+        public Graph(Techs techs, Mods mods, Components.Components components)
         {
             _techs = techs;
             _mods = mods;
+            _components = components;
         }
 
         public class Vertex
@@ -43,7 +46,17 @@ namespace StellarisParser.Core
             
             [XmlAttribute("Area")]
             public string Area { get; set; }
-
+            
+            // Component
+            [XmlAttribute("Power")]
+            public double Power { get; set; }
+            
+            // Thruster
+            [XmlAttribute("Speed")]
+            public double Speed { get; set; }
+            
+            [XmlAttribute("Evasion")]
+            public double Evasion { get; set; }
         }
 
         private string GetSource(string source)
@@ -63,6 +76,30 @@ namespace StellarisParser.Core
             return tech.Replace("tech_", string.Empty);
         }
 
+        private bool AddComponent(Component component)
+        {
+            if (_graph.Vertices.Any(t => t.Id == component.Key))
+                return false;
+
+            var tech = component.Prerequisites.FirstOrDefault();
+
+            var thruster = component as Thruster;
+            var vertex = new Vertex
+            {
+                Id = component.Key,
+                Name = component.Key,
+                Power = component.Power,
+                Tier = tech?.Tier ?? 0,
+                Cost = tech?.Cost ?? 0,
+                Source = GetSource(component.Source),
+                Label = component.Key,
+                Speed = thruster?.SpeedMultipler ?? 0,
+                Evasion = thruster?.Evasion ?? 0
+            };
+            _graph.AddVertex(vertex);
+            return true;
+        }
+        
         private bool AddTech(Tech tech)
         {
             if (_graph.Vertices.Any(t => t.Id == tech.Name))
@@ -83,6 +120,11 @@ namespace StellarisParser.Core
             return true;
         }
 
+        private Vertex GetVertex(Component component)
+        {
+            return _graph.Vertices.SingleOrDefault(x => x.Id == component.Key);
+        }
+
         private Vertex GetVertex(Tech tech)
         {
             return _graph.Vertices.SingleOrDefault(t => t.Id == tech.Name);
@@ -101,6 +143,16 @@ namespace StellarisParser.Core
                     AddTech(t);
 
                     var edge = new SEdge<Vertex>(GetVertex(t),GetVertex(tech));
+                    _graph.AddEdge(edge);
+                }
+            }
+
+            foreach (var (key, component) in _components.Map)
+            {
+                AddComponent(component);
+                foreach (var t in component.Prerequisites)
+                {
+                    var edge = new SEdge<Vertex>(GetVertex(t), GetVertex(component));
                     _graph.AddEdge(edge);
                 }
             }
