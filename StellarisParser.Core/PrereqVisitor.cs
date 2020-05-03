@@ -27,7 +27,7 @@ namespace StellarisParser.Core
 
         public override Techs VisitKeyval(stellarisParser.KeyvalContext context)
         {
-            if (context.key().id().GetText() != Specs.PrereqId)
+            if (context.key().id().GetText() != Specs.PREREQ_ID)
                 return null;
 
             var ids = context.val().group().id();

@@ -6,8 +6,8 @@ namespace StellarisParser.Core
     public class Variables
     {
         // public List<Variable<double>> Values { get; set; } = new List<Variable<double>>();
-        private Dictionary<string, Dictionary<string, double>> SourceMaps = new Dictionary<string, Dictionary<string, double>>();
-        private Dictionary<string, double> Map { get; } = new Dictionary<string, double>();
+        private Dictionary<string, Dictionary<string, string>> SourceMaps = new Dictionary<string, Dictionary<string, string>>();
+        private Dictionary<string, string> Map { get; } = new Dictionary<string, string>();
 
         public Variables()
         {
@@ -16,7 +16,7 @@ namespace StellarisParser.Core
 
         public int Count => Map.Count;
 
-        public void Add(Variable<double> var)
+        public void Add(Variable<string> var)
         {
             Map[var.Id] = var.Value;
         }
@@ -24,7 +24,7 @@ namespace StellarisParser.Core
         public void Aggregate(Variables other, string source = null)
         {
             if (source != null)
-                SourceMaps[source] = new Dictionary<string, double>(other.Map);
+                SourceMaps[source] = new Dictionary<string, string>(other.Map);
             
             foreach (var (key, value) in other.Map)
                 Map[key] = value;
@@ -33,8 +33,15 @@ namespace StellarisParser.Core
         public double Get(string name)
         {
             if (Map.ContainsKey(name))
-                return Map[name];
+                return Parse(Map[name]);
             return NaN;
+        }
+
+        public string GetString(string name)
+        {
+            if (Map.ContainsKey(name))
+                return Map[name];
+            return string.Empty;
         }
     }
 }

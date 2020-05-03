@@ -9,7 +9,7 @@ namespace StellarisParser.Core
     public class Graph
     {
         private readonly Techs _techs;
-        
+
         private readonly BidirectionalGraph<Vertex, SEdge<Vertex>> _graph
             = new BidirectionalGraph<Vertex, SEdge<Vertex>>();
 
@@ -20,15 +20,37 @@ namespace StellarisParser.Core
 
         public class Vertex
         {
-            [XmlAttribute("Label")]
+            [XmlAttribute("Id")]
             public string Id { get; set; }
-            
+
+            [XmlAttribute("Label")]
+            public string Label { get; set; }
+
             [XmlAttribute("Cost")]
             public double Cost { get; set; }
             
             [XmlAttribute("Tier")]
             public double Tier { get; set; }
+            
+            [XmlAttribute("Source")]
+            public string Source { get; set; }
+            
+            [XmlAttribute("Area")]
+            public string Area { get; set; }
 
+        }
+
+        private string GetSource(string source)
+        {
+            if (source.StartsWith(Specs.BASE_PATH))
+                source = "StellarisBase";
+
+            return source;
+        }
+
+        private string GetTechName(string tech)
+        {
+            return tech.Replace("tech_", string.Empty);
         }
 
         private bool AddTech(Tech tech)
@@ -39,8 +61,11 @@ namespace StellarisParser.Core
             var vertex = new Vertex
             {
                 Id = tech.Name,
+                Label = GetTechName(tech.Name),
                 Cost = tech.Cost,
-                Tier = tech.Tier
+                Tier = tech.Tier,
+                Source = GetSource(tech.Source),
+                Area = tech.Area
             };
 
             _graph.AddVertex(vertex);
@@ -56,10 +81,9 @@ namespace StellarisParser.Core
         {
             _graph.Clear();
 
-            foreach (var tech in _techs.ToList())
+            foreach (var (key, tech) in _techs.Map)
             {
-                if (!AddTech(tech))
-                    continue;
+                AddTech(tech);
                 
                 foreach (var t in tech.Prerequisites)
                 {

@@ -5,17 +5,19 @@ namespace StellarisParser.Core
 {
     public class TechsVisitor : StellarisVisitor<Techs>
     {
+        private readonly Parser _parser;
         private readonly AreaVisitor _areaVisitor;
         private readonly TierVisitor _tierVisitor;
         private readonly CostVisitor _costVisitor;
         private readonly PrereqVisitor _prereqVisitor;
 
-        public TechsVisitor(AreaVisitor areaVisitor, TierVisitor tierVisitor, CostVisitor costVisitor, PrereqVisitor prereqVisitor)
+        public TechsVisitor(Parser parser, AreaVisitor areaVisitor, TierVisitor tierVisitor, CostVisitor costVisitor, PrereqVisitor prereqVisitor)
         {
             _areaVisitor = areaVisitor;
             _tierVisitor = tierVisitor;
             _costVisitor = costVisitor;
             _prereqVisitor = prereqVisitor;
+            _parser = parser;
         }
         
         public override Techs VisitChildren(IRuleNode node)
@@ -46,6 +48,7 @@ namespace StellarisParser.Core
             var tier = _tierVisitor.Visit(context.val());
             var cost = _costVisitor.Visit(context.val());
             var prereqs = _prereqVisitor.Visit(context.val());
+            var source = _parser.CurrentSource;
             
             var tech = new Tech
             {
@@ -53,7 +56,8 @@ namespace StellarisParser.Core
                 Area = area,
                 Tier = tier,
                 Cost = (int) cost,
-                Prerequisites = prereqs?.ToList() ?? new List<Tech>()
+                Prerequisites = prereqs?.ToList() ?? new List<Tech>(),
+                Source = source
             };
 
             var techs = new Techs();

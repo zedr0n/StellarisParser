@@ -11,7 +11,8 @@ namespace StellarisParser.Core
 
         public void Aggregate(Techs other)
         {
-            foreach (var (key, value) in other.Map)
+            var copy = new Dictionary<string, Tech>(other.Map);
+            foreach (var (key, value) in copy)
                 Map[key] = value;
         }
 

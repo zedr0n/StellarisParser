@@ -30,7 +30,7 @@ namespace StellarisParser.Core
             container.Register<Techs>(Lifestyle.Singleton);
             container.Register<Graph>(Lifestyle.Singleton);
 
-            container.Register<Parser>();
+            container.Register<Parser>(Lifestyle.Singleton);
         }
     }
 }

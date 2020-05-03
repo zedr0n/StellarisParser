@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
@@ -8,6 +9,9 @@ namespace StellarisParser.Core
     public class Parser
     {
         private readonly Container _container;
+        private readonly Variables _vars;
+        private readonly Techs _techs;
+        public string CurrentSource { get; private set; }
 
         public T RunVisitor<T>(string text)
         {
@@ -31,21 +35,28 @@ namespace StellarisParser.Core
                 return null;
 
             if (baseVars != "" && File.Exists(baseVars))
-            {
-                var varsStr = File.ReadAllText(baseVars);
-                var vars = RunVisitor<Variables>(varsStr);
-                _container.GetInstance<Variables>().Aggregate(vars);
-            }
+                ReadVars(baseVars);
             
-            var str = File.ReadAllText(filename);
-            RunVisitor<Variables>(str);
             // run parser twice to process prerequisites
-            var techs = _container.GetInstance<Techs>();
-            techs.Aggregate(RunVisitor<Techs>(str));
-            techs.Aggregate(RunVisitor<Techs>(str));
-            return techs;
+            ReadTechs(filename);
+            return ReadTechs(filename);
         }
-        
+
+        public Techs ReadTechs(string file)
+        {
+            CurrentSource = file;
+            _vars.Aggregate(RunVisitor<Variables>(File.ReadAllText(file)));
+            _techs.Aggregate(RunVisitor<Techs>(File.ReadAllText(file)));
+            return _techs;
+            //_techs.Aggregate(RunVisitor<Techs>(File.ReadAllText(file)));
+        }
+
+        public void ReadVars(string file)
+        {
+            CurrentSource = file;
+            _vars.Aggregate(RunVisitor<Variables>(File.ReadAllText(file)));
+        }
+
         public void RunListeners(string text)
         {
             var inputStream = new AntlrInputStream(text);
@@ -61,10 +72,12 @@ namespace StellarisParser.Core
             foreach(var listener in _container.GetAllInstances<IstellarisListener>())
                 ParseTreeWalker.Default.Walk(listener, context);    
         }
-        
-        public Parser(Container container)
+
+        public Parser(Container container, Variables vars, Techs techs)
         {
             _container = container;
+            _vars = vars;
+            _techs = techs;
         }
     }
 }

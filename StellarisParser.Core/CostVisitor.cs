@@ -11,7 +11,7 @@ namespace StellarisParser.Core
             _variables = variables;
         }
 
-        public override string SpecId => Specs.CostId;
+        public override string SpecId => Specs.COST_ID;
         public override double GetValue(stellarisParser.IdContext context)
         {
             return Parse(context.GetText());
