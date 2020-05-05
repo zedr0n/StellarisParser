@@ -5,7 +5,7 @@ namespace StellarisParser.Core.Techs
 {
     public class TechModifier : stellarisBaseListener
     {
-        private const string Potential = @"potential = { }";
+        private const string Potential = @"potential = { has_global_flag = dummy }";
         private bool _hasPotential;
         
         public class HasPotential : stellarisBaseListener
@@ -70,6 +70,7 @@ namespace StellarisParser.Core.Techs
                 var lastChild = context.val().@group().GetChild(context.val().@group().ChildCount - 1);
                 context.val().@group().CopyFrom(ctx.val().@group());
                 context.val().@group().children.Add(firstChild);
+                context.val().@group().children.Add(ctx.val().@group().children[1]);
                 context.val().@group().children.Add(lastChild);
 
                 return;
@@ -84,9 +85,9 @@ namespace StellarisParser.Core.Techs
             
             if (!_hasPotential)
             {
-                var ctx = GetNoPotential();
-                ctx.Parent = context.val().@group().expr()[0];
-                context.val().group().expr()[0].AddChild(ctx);
+                var ctx2 = GetNoPotential();
+                ctx2.Parent = context.val().@group().expr()[0];
+                context.val().group().expr()[0].AddChild(ctx2);
             }
             
             base.EnterKeyval(context);
