@@ -131,9 +131,19 @@ namespace StellarisParser.Test
         [Fact]
         public void CanDisableTech()
         {
-            var parser = CreateParser();
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+            var techs = container.GetInstance<TechsList>();
             
-            var str = parser.ApplyModifications(DestroyersWithTechCosts + "\n" + SolarPanelNetworks);
+            var file = DestroyersWithTechCosts + "\n" + SolarPanelNetworks;
+            techs.Aggregate(parser.RunVisitor<TechsList>(file));
+
+            foreach (var (key, tech) in techs.Map)
+            {
+                tech.Disable = true;
+            }
+
+            var str = parser.ApplyModifications(file);
             var target = @"
 
 tech_destroyers   = { cost   = @tier2cost1     area   = engineering    tier   = 2    category   = { voidcraft  }    prerequisites   = { ""tech_corvettes""  }    weight   = @tier2weight1     gateway   = ship    potential   = { }     }   

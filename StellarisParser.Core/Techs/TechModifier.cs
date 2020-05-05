@@ -1,23 +1,13 @@
-using System.Linq;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace StellarisParser.Core.Techs
 {
     public class TechModifier : stellarisBaseListener
     {
-        private readonly TechsList _techsList;
-
-        public TechModifier(TechsList techsList)
-        {
-            _techsList = techsList;
-        }
-
         private const string Potential = @"potential = { }";
-        private stellarisParser.KeyvalContext _noPotential;
-        private bool _hasPotential = false;
-
+        private bool _hasPotential;
+        
         public class HasPotential : stellarisBaseListener
         {
             public bool Result { get; set; }
@@ -68,7 +58,7 @@ namespace StellarisParser.Core.Techs
 
             return lvl;
         }
-
+        
         public override void EnterKeyval(stellarisParser.KeyvalContext context)
         {
             var id = context.key()?.id()?.GetText();
@@ -92,13 +82,6 @@ namespace StellarisParser.Core.Techs
             if (id == null)
                 return;
             
-            var tech = _techsList[id];
-            if (tech != null)
-            {
-                var disableTech = tech.Disable;
-                context.val().children.Add(_noPotential);
-            }
-
             if (!_hasPotential)
             {
                 var ctx = GetNoPotential();
