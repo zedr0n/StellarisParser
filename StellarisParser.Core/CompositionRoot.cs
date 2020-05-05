@@ -27,7 +27,8 @@ namespace StellarisParser.Core
             container.Register<IStellarisVisitor<ModDescriptor>, DescriptorVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<Component>, ComponentVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<Thruster>, ThrusterVisitor>(Lifestyle.Singleton);
-            container.Register<IStellarisVisitor<Components.ComponentsList>, ComponentsListVisitor>(Lifestyle.Singleton);
+            container.Register<IStellarisVisitor<Reactor>, ReactorVisitor>(Lifestyle.Singleton);
+            container.Register<IStellarisVisitor<ComponentsList>, ComponentsListVisitor>(Lifestyle.Singleton);
             
             container.Register<AreaVisitor>(Lifestyle.Singleton);
             container.Register<TierVisitor>(Lifestyle.Singleton);
@@ -35,17 +36,22 @@ namespace StellarisParser.Core
             container.Register<PrereqVisitor>(Lifestyle.Singleton);
             container.Register<KeyVisitor>(Lifestyle.Singleton);
             container.Register<PowerVisitor>(Lifestyle.Singleton);
+            container.Register<UpgradesToVisitor>(Lifestyle.Singleton);
             container.Register<ModifierVisitor<EvasionVisitor>>(Lifestyle.Singleton);
             container.Register<ModifierVisitor<SpeedVisitor>>(Lifestyle.Singleton);
             container.Register<EvasionVisitor>(Lifestyle.Singleton);
             container.Register<SpeedVisitor>(Lifestyle.Singleton);
             container.Register<ComponentSetVisitor>(Lifestyle.Singleton);
             container.Register<ThrusterVisitor>(Lifestyle.Singleton);
+            container.Register<ReactorVisitor>(Lifestyle.Singleton);
+            
+            container.Register<TechModifier>(Lifestyle.Singleton);
+            container.Register<TechsModifier>(Lifestyle.Singleton);
             
             container.Register<Variables>(Lifestyle.Singleton);
             container.Register<TechsList>(Lifestyle.Singleton);
             container.Register<Graph>(Lifestyle.Singleton);
-            container.Register<Components.ComponentsList>(Lifestyle.Singleton);
+            container.Register<ComponentsList>(Lifestyle.Singleton);
             
             container.Register<Parser>(Lifestyle.Singleton);
             container.Register<Mods>(Lifestyle.Singleton);

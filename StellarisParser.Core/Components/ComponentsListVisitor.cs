@@ -4,11 +4,13 @@ namespace StellarisParser.Core.Components
 {
     public class ComponentsListVisitor : StellarisVisitor<ComponentsList>
     {
-        private ThrusterVisitor _thrusterVisitor;
+        private readonly ThrusterVisitor _thrusterVisitor;
+        private readonly ReactorVisitor _reactorVisitor;
 
-        public ComponentsListVisitor(ThrusterVisitor thrusterVisitor)
+        public ComponentsListVisitor(ThrusterVisitor thrusterVisitor, ReactorVisitor reactorVisitor)
         {
             _thrusterVisitor = thrusterVisitor;
+            _reactorVisitor = reactorVisitor;
         }
 
         public override ComponentsList VisitChildren(IRuleNode node)
@@ -38,6 +40,11 @@ namespace StellarisParser.Core.Components
             var thruster = _thrusterVisitor.Visit(context);
             if (thruster != null)
                 components.Add(thruster);
+
+            var reactor = _reactorVisitor.Visit(context);
+            if (reactor != null)
+                components.Add(reactor);
+            
             return components;
         }
     }
