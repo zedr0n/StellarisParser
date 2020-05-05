@@ -23,7 +23,7 @@ namespace StellarisParser.Core
             if (context.key().id().GetText() != "name")
                 return null;
 
-            var val = context.val().id().GetText();
+            var val = context.val().id().GetText().Replace('"'.ToString(),"");
             
             return new ModDescriptor
             {

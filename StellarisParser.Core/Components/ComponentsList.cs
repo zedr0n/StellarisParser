@@ -23,7 +23,7 @@ namespace StellarisParser.Core.Components
 
         public int Count => Map.Count;
 
-        public Component this[string key] => Map.ContainsKey(key) ? Map[key] : null;
+        public Component this[string key] => key == null ? null : Map.ContainsKey(key) ? Map[key] : null;
 
         public List<Component> ToList() => Map.Values.ToList();
     }

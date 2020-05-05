@@ -129,6 +129,21 @@ namespace StellarisParser.Test
         }
 
         [Fact]
+        public void CanDisableTech()
+        {
+            var parser = CreateParser();
+            
+            var str = parser.ApplyModifications(DestroyersWithTechCosts + "\n" + SolarPanelNetworks);
+            var target = @"
+
+tech_destroyers   = { cost   = @tier2cost1     area   = engineering    tier   = 2    category   = { voidcraft  }    prerequisites   = { ""tech_corvettes""  }    weight   = @tier2weight1     gateway   = ship    potential   = { }     }   
+tech_solar_panel_network   = { area   = engineering    tier   = 0    category   = { voidcraft  }    prerequisites   = { ""tech_starbase_2""  }    start_tech   = yes    potential   = { }     }   ";
+            target = target.Replace("\r", "");
+                
+            Assert.Equal(target, str);
+        }
+
+        [Fact]
         public void CanParseVariables()
         {
             var parser = CreateParser();
@@ -227,7 +242,7 @@ namespace StellarisParser.Test
         }
         
         [Fact]
-        public void CanParseComponents()
+        public void CanParseThruster()
         {
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
@@ -236,6 +251,18 @@ namespace StellarisParser.Test
 
             var components = container.GetInstance<ComponentsList>();
             Assert.Equal(30, components.Count);
+        }
+        
+        [Fact]
+        public void CanParseReactor()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+            parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_reactors.txt");
+
+            var components = container.GetInstance<ComponentsList>();
+            Assert.Equal(46, components.Count);
         }
     }
 }

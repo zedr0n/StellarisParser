@@ -42,15 +42,25 @@ namespace StellarisParser.Core
             [XmlAttribute("Tier")]
             public double Tier { get; set; }
             
-            [XmlAttribute("Source")]
-            public string Source { get; set; }
-            
             [XmlAttribute("Area")]
             public string Area { get; set; }
-            
+
+            // Source
+            [XmlAttribute("Source")]
+            public string Source { get; set; }
+
+            [XmlAttribute("SourcePath")]
+            public string SourcePath { get; set; }
+
             // Component
             [XmlAttribute("Power")]
             public double Power { get; set; }
+            
+            [XmlAttribute("Type")]
+            public string Type { get; set; }
+            
+            [XmlAttribute("UpgradesTo")]
+            public string UpgradesTo { get; set; }
             
             // Thruster
             [XmlAttribute("Speed")]
@@ -79,6 +89,12 @@ namespace StellarisParser.Core
 
         private bool AddComponent(Component component)
         {
+            var existingVertex = _graph.Vertices.Where(t => t.Id == component.Key);
+            foreach (var v in existingVertex)
+            {
+                v.UpgradesTo = component.UpgradesTo?.Key;
+            }
+            
             if (_graph.Vertices.Any(t => t.Id == component.Key))
                 return false;
 
@@ -90,9 +106,13 @@ namespace StellarisParser.Core
                 Id = component.Key,
                 Name = component.Key,
                 Power = component.Power,
+                Type = component.Type,
                 Tier = tech?.Tier ?? 0,
                 Cost = tech?.Cost ?? 0,
+                Area = tech?.Area ?? "",
+                UpgradesTo = component.UpgradesTo?.Key,
                 Source = GetSource(component.Source),
+                SourcePath = component.Source.Replace("\\\\", "\\"),
                 Label = component.Key,
                 Speed = thruster?.SpeedMultipler ?? 0,
                 Evasion = thruster?.Evasion ?? 0
@@ -114,7 +134,9 @@ namespace StellarisParser.Core
                 Cost = tech.Cost,
                 Tier = tech.Tier,
                 Source = GetSource(tech.Source),
-                Area = tech.Area
+                SourcePath = tech.Source.Replace("\\\\", "\\"),
+                Area = tech.Area,
+                Type = "TECH"
             };
 
             _graph.AddVertex(vertex);
@@ -156,6 +178,14 @@ namespace StellarisParser.Core
                     var edge = new SEdge<Vertex>(GetVertex(t), GetVertex(component));
                     _graph.AddEdge(edge);
                 }
+
+                if (component.UpgradesTo != null)
+                {
+                    AddComponent(component.UpgradesTo);
+                    var edge = new SEdge<Vertex>(GetVertex(component), GetVertex(component.UpgradesTo));
+                    _graph.AddEdge(edge);
+                }
+                
             }
         }
         

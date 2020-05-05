@@ -12,5 +12,6 @@ namespace StellarisParser.Core.Techs
         public string Source { get; set; }
         public List<string> Category { get; } = new List<string>();
         public List<Tech> Prerequisites { get; set; } = new List<Tech>();
+        public bool Disable { get; set; } = false;
     }
 }

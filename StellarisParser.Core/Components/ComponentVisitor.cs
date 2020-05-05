@@ -5,21 +5,29 @@ namespace StellarisParser.Core.Components
 {
     public class ComponentVisitor : StellarisVisitor<Component>
     {
+        private readonly ComponentsList _componentsList;
+        
         private readonly KeyVisitor _keyVisitor;
         private readonly PowerVisitor _powerVisitor;
         private readonly PrereqVisitor _prereqVisitor;
         private readonly ComponentSetVisitor _componentSetVisitor;
-
+        private readonly UpgradesToVisitor _upgradesToVisitor;
+        
         private readonly Parser _parser;
         protected virtual string ComponentSet { get; } = null;
+        
+        public virtual Component Create() => new Component();
 
         public ComponentVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor,
-            ComponentSetVisitor componentSetVisitor, Parser parser)
+            ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser,
+            ComponentsList componentsList)
         {
             _keyVisitor = keyVisitor;
             _powerVisitor = powerVisitor;
             _prereqVisitor = prereqVisitor;
             _parser = parser;
+            _componentsList = componentsList;
+            _upgradesToVisitor = upgradesToVisitor;
             _componentSetVisitor = componentSetVisitor;
         }
 
@@ -33,14 +41,16 @@ namespace StellarisParser.Core.Components
             var power = _powerVisitor.Visit(context.val());
             var prereqs = _prereqVisitor.Visit(context.val());
             var source = _parser.CurrentSource;
-            
-            return new Component
-            {
-                Key = key,
-                Power = power,
-                Prerequisites = prereqs?.ToList() ?? new List<Tech>(),
-                Source = source
-            };
+            var upgradesTo = _upgradesToVisitor.Visit(context.val());
+
+            var component = Create();
+            component.Key = key;
+            component.Power = power;
+            component.Source = source;
+            component.Prerequisites = prereqs?.ToList() ?? new List<Tech>();
+            component.UpgradesTo = _componentsList[upgradesTo];
+
+            return component;
         }
     }
 }

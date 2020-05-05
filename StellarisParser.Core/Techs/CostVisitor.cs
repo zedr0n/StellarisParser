@@ -2,27 +2,12 @@ using static System.Double;
 
 namespace StellarisParser.Core.Techs
 {
-    public class CostVisitor : SpecVisitor<double> 
+    public class CostVisitor : SpecVisitorDouble 
     {
-        private readonly Variables _variables;
-
-        public CostVisitor(Variables variables)
-        {
-            _variables = variables;
-        }
-
         public override string SpecId => Specs.COST_ID;
-        public override double GetValue(stellarisParser.IdContext context)
-        {
-            return Parse(context.GetText());
-        }
 
-        public override double GetValue(stellarisParser.AttribContext context)
+        public CostVisitor(Variables variables) : base(variables)
         {
-            var id = context.id().GetText();
-            if (!IsNaN(_variables.Get(id)))
-                return _variables.Get(id);
-            return NaN;
         }
     }
 }

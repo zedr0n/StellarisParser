@@ -61,17 +61,22 @@ namespace StellarisParser.Console
 
             if (File.Exists(file))
             {
+                var read = Read.Add(file);
+
                 try
                 {
-                    System.Console.Write("Reading " + file + "...");
+                    if(!read)
+                        System.Console.Write("Reading " + file + "...");
                     
                     _parser.ReadComponents(file);
-                    System.Console.WriteLine(" OK!");
+                    if(!read)
+                        System.Console.WriteLine(" OK!");
                     
                 }
                 catch (Exception e)
                 {
-                    System.Console.WriteLine(" Error!");
+                    if(!read)
+                        System.Console.WriteLine(" Error!");
                 }
             }
             else 
@@ -86,8 +91,12 @@ namespace StellarisParser.Console
         
         private static void ReadAllComponents(string directory)
         {
+            // reading twice to process all upgrades
             foreach (var file in Directory.GetFiles(directory))
                 ReadComponents(file);
+            foreach (var file in Directory.GetFiles(directory))
+                ReadComponents(file);
+
         }
         
         private static void ReadAllTechs(string directory)
