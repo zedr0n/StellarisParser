@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace StellarisParser.Core.Components
 {
-    public class Components
+    public class ComponentsList
     {
         private readonly Dictionary<string, Component> _components = new Dictionary<string, Component>();
 
         public Dictionary<string, Component> Map => _components;
 
-        public void Aggregate(Components other)
+        public void Aggregate(ComponentsList other)
         {
             var copy = new Dictionary<string, Component>(other.Map);
             foreach (var (key, value) in copy)

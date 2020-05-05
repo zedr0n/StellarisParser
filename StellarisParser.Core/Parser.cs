@@ -3,6 +3,7 @@ using System.IO;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using SimpleInjector;
+using StellarisParser.Core.Techs;
 
 namespace StellarisParser.Core
 {
@@ -10,8 +11,8 @@ namespace StellarisParser.Core
     {
         private readonly Container _container;
         private readonly Variables _vars;
-        private readonly Techs _techs;
-        private readonly Components.Components _components;
+        private readonly TechsList _techsList;
+        private readonly Components.ComponentsList _componentsList;
         public string CurrentSource { get; private set; }
 
         public T RunVisitor<T>(string text)
@@ -30,7 +31,7 @@ namespace StellarisParser.Core
             return visitor.VisitContent(context);
         }
         
-        public Techs ReadFile(string filename, string baseVars = "")
+        public TechsList ReadFile(string filename, string baseVars = "")
         {
             if (!File.Exists(filename))
                 return null;
@@ -47,15 +48,15 @@ namespace StellarisParser.Core
         {
             CurrentSource = file;
             _vars.Aggregate(RunVisitor<Variables>(File.ReadAllText(file)));
-            _components.Aggregate(RunVisitor<Components.Components>(File.ReadAllText(file)));
+            _componentsList.Aggregate(RunVisitor<Components.ComponentsList>(File.ReadAllText(file)));
         }
         
-        public Techs ReadTechs(string file)
+        public TechsList ReadTechs(string file)
         {
             CurrentSource = file;
             _vars.Aggregate(RunVisitor<Variables>(File.ReadAllText(file)));
-            _techs.Aggregate(RunVisitor<Techs>(File.ReadAllText(file)));
-            return _techs;
+            _techsList.Aggregate(RunVisitor<TechsList>(File.ReadAllText(file)));
+            return _techsList;
             //_techs.Aggregate(RunVisitor<Techs>(File.ReadAllText(file)));
         }
 
@@ -81,12 +82,12 @@ namespace StellarisParser.Core
                 ParseTreeWalker.Default.Walk(listener, context);    
         }
 
-        public Parser(Container container, Variables vars, Techs techs, Components.Components components)
+        public Parser(Container container, Variables vars, TechsList techsList, Components.ComponentsList componentsList)
         {
             _container = container;
             _vars = vars;
-            _techs = techs;
-            _components = components;
+            _techsList = techsList;
+            _componentsList = componentsList;
         }
     }
 }

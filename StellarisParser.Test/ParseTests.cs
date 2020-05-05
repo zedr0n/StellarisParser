@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Linq;
 using StellarisParser.Core;
 using StellarisParser.Core.Components;
+using StellarisParser.Core.Techs;
 using Xunit;
 using Component = StellarisParser.Core.Components.Component;
 using Container = SimpleInjector.Container;
@@ -120,7 +121,7 @@ namespace StellarisParser.Test
         {
             var parser = CreateParser();
             
-            var tech = parser.RunVisitor<Techs>(SolarPanelNetworks).Map.First().Value;
+            var tech = parser.RunVisitor<TechsList>(SolarPanelNetworks).Map.First().Value;
             
             Assert.Equal("tech_solar_panel_network", tech.Name);
             Assert.Equal("engineering", tech.Area);
@@ -148,7 +149,7 @@ namespace StellarisParser.Test
             var vars = parser.RunVisitor<Variables>(DestroyersWithTechCosts);
             variables.Aggregate(vars);
             
-            var tech = parser.RunVisitor<Techs>(DestroyersWithTechCosts).Map.First().Value;
+            var tech = parser.RunVisitor<TechsList>(DestroyersWithTechCosts).Map.First().Value;
 
             Assert.Equal(4000, tech.Cost);
         }
@@ -163,7 +164,7 @@ namespace StellarisParser.Test
             var vars = parser.RunVisitor<Variables>(TechCosts);
             variables.Aggregate(vars);
             
-            var techs = parser.RunVisitor<Techs>(Destroyers);
+            var techs = parser.RunVisitor<TechsList>(Destroyers);
 
             Assert.Equal(4000, techs["tech_destroyers"].Cost);
         }
@@ -177,7 +178,7 @@ namespace StellarisParser.Test
 
             var str = DestroyersWithTechCosts + "\n" + SolarPanelNetworks;
             variables.Aggregate(parser.RunVisitor<Variables>(str));
-            var techs = parser.RunVisitor<Techs>(str);
+            var techs = parser.RunVisitor<TechsList>(str);
             
             Assert.Equal(2, techs.Count);
             Assert.Equal(4000, techs["tech_destroyers"].Cost);
@@ -189,7 +190,7 @@ namespace StellarisParser.Test
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
 
-            var techs = parser.ReadFile("../../../../00_eng_tech.txt","../../../../00_scripted_variables.txt");
+            var techs = parser.ReadFile(Specs.TECH_PATH + "\\00_eng_tech.txt",Specs.BASE_VARS);
             
             Assert.Equal(80, techs.Count);
             var tech = techs["tech_destroyers"];
@@ -202,7 +203,7 @@ namespace StellarisParser.Test
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
 
-            var techs = parser.ReadFile("../../../../00_eng_tech.txt","../../../../00_scripted_variables.txt");
+            var techs = parser.ReadFile(Specs.TECH_PATH + "\\00_eng_tech.txt",Specs.BASE_VARS);
             var graph = container.GetInstance<Graph>();
             graph.Populate();
             graph.Serialise(nameof(CanSerialiseGraph));
@@ -214,7 +215,7 @@ namespace StellarisParser.Test
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
             parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
-            parser.ReadVars(Specs.BASE_PATH + "\\common\\component_templates\\00_utilities_thrusters.txt");
+            parser.ReadVars(Specs.COMPONENT_PATH + "\\00_utilities_thrusters.txt");
             //parser.ReadVars("../../../../00_scripted_variables.txt");
 
             var component = parser.RunVisitor<Component>(Thruster);
@@ -231,9 +232,9 @@ namespace StellarisParser.Test
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
             parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
-            parser.ReadComponents(Specs.BASE_PATH + "\\common\\component_templates\\00_utilities_thrusters.txt");
+            parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_thrusters.txt");
 
-            var components = container.GetInstance<Components>();
+            var components = container.GetInstance<ComponentsList>();
             Assert.Equal(30, components.Count);
         }
     }

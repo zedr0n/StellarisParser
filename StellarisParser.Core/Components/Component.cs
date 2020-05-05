@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using StellarisParser.Core.Techs;
 
 namespace StellarisParser.Core.Components
 {
@@ -9,5 +10,6 @@ namespace StellarisParser.Core.Components
         public double Power { get; set; }
         public string Source { get; set; }
         
+        public virtual string Type { get; }
     }
 }

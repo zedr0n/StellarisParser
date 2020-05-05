@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace StellarisParser.Core
+namespace StellarisParser.Core.Techs
 {
-    public class Techs
+    public class TechsList
     {
         private readonly Dictionary<string, Tech> _techs = new Dictionary<string, Tech>();
 
         public Dictionary<string, Tech> Map => _techs;
 
-        public void Aggregate(Techs other)
+        public void Aggregate(TechsList other)
         {
             var copy = new Dictionary<string, Tech>(other.Map);
             foreach (var (key, value) in copy)

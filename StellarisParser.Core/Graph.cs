@@ -5,23 +5,24 @@ using Microsoft.EntityFrameworkCore.Internal;
 using QuickGraph;
 using QuickGraph.Serialization;
 using StellarisParser.Core.Components;
+using StellarisParser.Core.Techs;
 
 namespace StellarisParser.Core
 {
     public class Graph
     {
-        private readonly Techs _techs;
-        private readonly Components.Components _components;
+        private readonly TechsList _techsList;
+        private readonly Components.ComponentsList _componentsList;
         private readonly Mods _mods;
 
         private readonly BidirectionalGraph<Vertex, SEdge<Vertex>> _graph
             = new BidirectionalGraph<Vertex, SEdge<Vertex>>();
 
-        public Graph(Techs techs, Mods mods, Components.Components components)
+        public Graph(TechsList techsList, Mods mods, Components.ComponentsList componentsList)
         {
-            _techs = techs;
+            _techsList = techsList;
             _mods = mods;
-            _components = components;
+            _componentsList = componentsList;
         }
 
         public class Vertex
@@ -134,7 +135,7 @@ namespace StellarisParser.Core
         {
             _graph.Clear();
 
-            foreach (var (key, tech) in _techs.Map)
+            foreach (var (key, tech) in _techsList.Map)
             {
                 AddTech(tech);
                 
@@ -147,7 +148,7 @@ namespace StellarisParser.Core
                 }
             }
 
-            foreach (var (key, component) in _components.Map)
+            foreach (var (key, component) in _componentsList.Map)
             {
                 AddComponent(component);
                 foreach (var t in component.Prerequisites)

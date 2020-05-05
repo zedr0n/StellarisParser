@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using SimpleInjector;
 using StellarisParser.Core.Components;
+using StellarisParser.Core.Techs;
 
 namespace StellarisParser.Core
 {
@@ -21,12 +22,12 @@ namespace StellarisParser.Core
     {
         public virtual void ComposeApplication(Container container)
         {
-            container.Register<IStellarisVisitor<Techs>, TechsVisitor>(Lifestyle.Singleton);
+            container.Register<IStellarisVisitor<TechsList>, TechsListVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<Variables>, VariableVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<ModDescriptor>, DescriptorVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<Component>, ComponentVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<Thruster>, ThrusterVisitor>(Lifestyle.Singleton);
-            container.Register<IStellarisVisitor<Components.Components>, ComponentsVisitor>(Lifestyle.Singleton);
+            container.Register<IStellarisVisitor<Components.ComponentsList>, ComponentsListVisitor>(Lifestyle.Singleton);
             
             container.Register<AreaVisitor>(Lifestyle.Singleton);
             container.Register<TierVisitor>(Lifestyle.Singleton);
@@ -42,9 +43,9 @@ namespace StellarisParser.Core
             container.Register<ThrusterVisitor>(Lifestyle.Singleton);
             
             container.Register<Variables>(Lifestyle.Singleton);
-            container.Register<Techs>(Lifestyle.Singleton);
+            container.Register<TechsList>(Lifestyle.Singleton);
             container.Register<Graph>(Lifestyle.Singleton);
-            container.Register<Components.Components>(Lifestyle.Singleton);
+            container.Register<Components.ComponentsList>(Lifestyle.Singleton);
             
             container.Register<Parser>(Lifestyle.Singleton);
             container.Register<Mods>(Lifestyle.Singleton);

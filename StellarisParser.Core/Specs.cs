@@ -19,6 +19,10 @@ namespace StellarisParser.Core
         public const string BASE_VARS = BASE_PATH + "\\common\\scripted_variables\\00_scripted_variables.txt";
         public const string TECH_PATH = BASE_PATH + "\\common\\technology";
         public const string COMPONENT_PATH = BASE_PATH + "\\common\\component_templates";
-
+        
+        public enum ComponentType
+        {
+            THRUSTER
+        }
     }
 }

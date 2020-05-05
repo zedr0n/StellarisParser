@@ -1,6 +1,4 @@
-using System;
-
-namespace StellarisParser.Core
+namespace StellarisParser.Core.Techs
 {
     public class TierVisitor : SpecVisitor<int>
     {

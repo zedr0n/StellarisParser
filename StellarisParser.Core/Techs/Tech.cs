@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace StellarisParser.Core
+namespace StellarisParser.Core.Techs
 {
     public class Tech
     {

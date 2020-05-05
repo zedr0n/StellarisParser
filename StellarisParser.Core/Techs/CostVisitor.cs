@@ -1,6 +1,6 @@
 using static System.Double;
 
-namespace StellarisParser.Core
+namespace StellarisParser.Core.Techs
 {
     public class CostVisitor : SpecVisitor<double> 
     {

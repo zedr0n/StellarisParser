@@ -1,4 +1,4 @@
-namespace StellarisParser.Core
+namespace StellarisParser.Core.Techs
 {
     public class Area
     {

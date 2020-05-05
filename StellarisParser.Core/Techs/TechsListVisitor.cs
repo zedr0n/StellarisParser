@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Antlr4.Runtime.Tree;
 
-namespace StellarisParser.Core
+namespace StellarisParser.Core.Techs
 {
-    public class TechsVisitor : StellarisVisitor<Techs>
+    public class TechsListVisitor : StellarisVisitor<TechsList>
     {
         private readonly Parser _parser;
         private readonly AreaVisitor _areaVisitor;
@@ -11,7 +11,7 @@ namespace StellarisParser.Core
         private readonly CostVisitor _costVisitor;
         private readonly PrereqVisitor _prereqVisitor;
 
-        public TechsVisitor(Parser parser, AreaVisitor areaVisitor, TierVisitor tierVisitor, CostVisitor costVisitor, PrereqVisitor prereqVisitor)
+        public TechsListVisitor(Parser parser, AreaVisitor areaVisitor, TierVisitor tierVisitor, CostVisitor costVisitor, PrereqVisitor prereqVisitor)
         {
             _areaVisitor = areaVisitor;
             _tierVisitor = tierVisitor;
@@ -20,9 +20,9 @@ namespace StellarisParser.Core
             _parser = parser;
         }
         
-        public override Techs VisitChildren(IRuleNode node)
+        public override TechsList VisitChildren(IRuleNode node)
         {
-            var result = new Techs();
+            var result = new TechsList();
             var childCount = node.ChildCount;
             for (var i = 0; i < childCount && ShouldVisitNextChild(node, result); ++i)
             {
@@ -34,7 +34,7 @@ namespace StellarisParser.Core
             return result;
         }
 
-        public override Techs VisitKeyval(stellarisParser.KeyvalContext context)
+        public override TechsList VisitKeyval(stellarisParser.KeyvalContext context)
         {
             var lvl = Level(context);
             if (lvl > 1)
@@ -60,7 +60,7 @@ namespace StellarisParser.Core
                 Source = source
             };
 
-            var techs = new Techs();
+            var techs = new TechsList();
             techs.Add(tech);
             return techs;
         }

@@ -2,18 +2,18 @@ using Antlr4.Runtime.Tree;
 
 namespace StellarisParser.Core.Components
 {
-    public class ComponentsVisitor : StellarisVisitor<Components>
+    public class ComponentsListVisitor : StellarisVisitor<ComponentsList>
     {
         private ThrusterVisitor _thrusterVisitor;
 
-        public ComponentsVisitor(ThrusterVisitor thrusterVisitor)
+        public ComponentsListVisitor(ThrusterVisitor thrusterVisitor)
         {
             _thrusterVisitor = thrusterVisitor;
         }
 
-        public override Components VisitChildren(IRuleNode node)
+        public override ComponentsList VisitChildren(IRuleNode node)
         {
-            var result = new Components();
+            var result = new ComponentsList();
             var childCount = node.ChildCount;
             for (var i = 0; i < childCount && ShouldVisitNextChild(node, result); ++i)
             {
@@ -25,7 +25,7 @@ namespace StellarisParser.Core.Components
             return result;
         }
 
-        public override Components VisitKeyval(stellarisParser.KeyvalContext context)
+        public override ComponentsList VisitKeyval(stellarisParser.KeyvalContext context)
         {
             var lvl = Level(context);
             if (lvl > 1)
@@ -34,7 +34,7 @@ namespace StellarisParser.Core.Components
             if (context.key().id() == null)
                 return null;
 
-            var components = new Components();
+            var components = new ComponentsList();
             var thruster = _thrusterVisitor.Visit(context);
             if (thruster != null)
                 components.Add(thruster);
