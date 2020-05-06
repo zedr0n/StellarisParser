@@ -3,10 +3,10 @@ using StellarisParser.Core.Techs;
 
 namespace StellarisParser.Core.Components
 {
-    public class Component
+    public abstract class Component
     {
         public string Key { get; set; }
-        public virtual string Type { get; }
+        public abstract string Type { get; }
         
         public List<Tech> Prerequisites { get; set; } = new List<Tech>();
         public double Power { get; set; }

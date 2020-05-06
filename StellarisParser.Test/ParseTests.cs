@@ -298,5 +298,18 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             Assert.Equal(6, components.Count);
             Assert.Equal(-0.8, components.ToList().OfType<FtlDrive>().Min(f => f.WindupMultiplier));
         }
+        
+        [Fact]
+        public void CanParseAfterburner()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+            parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_afterburners.txt");
+
+            var components = container.GetInstance<ComponentsList>();
+            Assert.Equal(2, components.Count);
+            Assert.Equal(0.2, components.ToList().OfType<Afterburner>().Max(a => a.Speed));
+        }
     }
 }

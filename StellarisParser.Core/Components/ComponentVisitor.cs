@@ -1,9 +1,15 @@
 using System.Collections.Generic;
+using Antlr4.Runtime.Tree;
 using StellarisParser.Core.Techs;
 
 namespace StellarisParser.Core.Components
 {
-    public abstract class ComponentVisitor : StellarisVisitor<Component>
+    public interface IComponentVisitor
+    {
+        public Component Visit(IParseTree tree);
+    }
+    
+    public abstract class ComponentVisitor : StellarisVisitor<Component>, IComponentVisitor
     {
         private readonly ComponentsList _componentsList;
         
@@ -34,7 +40,7 @@ namespace StellarisParser.Core.Components
         public override Component VisitKeyval(stellarisParser.KeyvalContext context)
         {
             var componentsSet = _componentSetVisitor.Visit(context.val()).Replace('"'.ToString(),"");
-            if (componentsSet != ComponentSet && GetType() != typeof(ComponentVisitor))
+            if (!componentsSet.StartsWith(ComponentSet))
                 return null;
 
             var key = _keyVisitor.Visit(context.val());

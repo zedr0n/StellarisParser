@@ -1,18 +1,15 @@
+using System.Collections.Generic;
 using Antlr4.Runtime.Tree;
 
 namespace StellarisParser.Core.Components
 {
     public class ComponentsListVisitor : StellarisVisitor<ComponentsList>
     {
-        private readonly ThrusterVisitor _thrusterVisitor;
-        private readonly ReactorVisitor _reactorVisitor;
-        private readonly FtlDriveVisitor _driveVisitor;
+        private readonly IEnumerable<IComponentVisitor> _componentVisitors;
 
-        public ComponentsListVisitor(ThrusterVisitor thrusterVisitor, ReactorVisitor reactorVisitor, FtlDriveVisitor driveVisitor)
+        public ComponentsListVisitor(IEnumerable<IComponentVisitor> componentVisitors)
         {
-            _thrusterVisitor = thrusterVisitor;
-            _reactorVisitor = reactorVisitor;
-            _driveVisitor = driveVisitor;
+            _componentVisitors = componentVisitors;
         }
 
         public override ComponentsList VisitChildren(IRuleNode node)
@@ -39,17 +36,12 @@ namespace StellarisParser.Core.Components
                 return null;
 
             var components = new ComponentsList();
-            var thruster = _thrusterVisitor.Visit(context);
-            if (thruster != null)
-                components.Add(thruster);
-
-            var reactor = _reactorVisitor.Visit(context);
-            if (reactor != null)
-                components.Add(reactor);
-
-            var drive = _driveVisitor.Visit(context);
-            if (drive != null)
-                components.Add(drive);
+            foreach (var visitor in _componentVisitors)
+            {
+                var component = visitor.Visit(context);
+                if (component != null)
+                    components.Add(component);
+            }
             
             return components;
         }

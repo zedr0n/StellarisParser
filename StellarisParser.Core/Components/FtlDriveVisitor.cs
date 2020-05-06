@@ -15,7 +15,7 @@ namespace StellarisParser.Core.Components
             _jumpDriveVisitor = jumpDriveVisitor;
         }
 
-        protected override string ComponentSet => Specs.FLT_SET;
+        protected override string ComponentSet => Specs.FTL_SET;
 
         public override Component Create()
         {

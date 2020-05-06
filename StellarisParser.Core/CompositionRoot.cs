@@ -39,9 +39,9 @@ namespace StellarisParser.Core
             container.Register<PowerVisitor>(Lifestyle.Singleton);
             container.Register<UpgradesToVisitor>(Lifestyle.Singleton);
             container.Register<ModifierVisitor<EvasionVisitor>>(Lifestyle.Singleton);
-            container.Register<ModifierVisitor<SpeedVisitor>>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<BaseSpeedMultiplierVisitor>>(Lifestyle.Singleton);
             container.Register<EvasionVisitor>(Lifestyle.Singleton);
-            container.Register<SpeedVisitor>(Lifestyle.Singleton);
+            container.Register<BaseSpeedMultiplierVisitor>(Lifestyle.Singleton);
             container.Register<ComponentSetVisitor>(Lifestyle.Singleton);
             container.Register<ThrusterVisitor>(Lifestyle.Singleton);
             container.Register<ReactorVisitor>(Lifestyle.Singleton);
@@ -53,6 +53,12 @@ namespace StellarisParser.Core
             container.Register<JumpDriveVisitor>(Lifestyle.Singleton);
             container.Register<FtlDriveVisitor>(Lifestyle.Singleton);
             
+            container.Register<EvasionMultiplierVisitor>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<EvasionMultiplierVisitor>>(Lifestyle.Singleton);
+            container.Register<SpeedMultiplierVisitor>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<SpeedMultiplierVisitor>>(Lifestyle.Singleton);
+            container.Register<AfterburnerVisitor>(Lifestyle.Singleton);
+            
             container.Register<TechModifier>(Lifestyle.Singleton);
             container.Register<TechsModifier>(Lifestyle.Singleton);
             
@@ -63,6 +69,14 @@ namespace StellarisParser.Core
             
             container.Register<Parser>(Lifestyle.Singleton);
             container.Register<Mods>(Lifestyle.Singleton);
+            
+            container.Collection.Register<IComponentVisitor>(new List<Type>
+            {
+                typeof(ThrusterVisitor),
+                typeof(AfterburnerVisitor),
+                typeof(ReactorVisitor),
+                typeof(FtlDriveVisitor)
+            });
         }
     }
 }

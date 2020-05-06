@@ -114,7 +114,7 @@ namespace StellarisParser.Core
                 Source = GetSource(component.Source),
                 SourcePath = component.Source.Replace("\\\\", "\\"),
                 Label = component.Key,
-                Speed = thruster?.SpeedMultipler ?? 0,
+                Speed = thruster?.SpeedMultiplier ?? 0,
                 Evasion = thruster?.Evasion ?? 0
             };
             _graph.AddVertex(vertex);
