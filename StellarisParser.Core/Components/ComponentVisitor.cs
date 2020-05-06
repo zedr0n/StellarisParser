@@ -3,7 +3,7 @@ using StellarisParser.Core.Techs;
 
 namespace StellarisParser.Core.Components
 {
-    public class ComponentVisitor : StellarisVisitor<Component>
+    public abstract class ComponentVisitor : StellarisVisitor<Component>
     {
         private readonly ComponentsList _componentsList;
         
@@ -14,9 +14,9 @@ namespace StellarisParser.Core.Components
         private readonly UpgradesToVisitor _upgradesToVisitor;
         
         private readonly Parser _parser;
-        protected virtual string ComponentSet { get; } = null;
+        protected abstract string ComponentSet { get; }
         
-        public virtual Component Create() => new Component();
+        public abstract Component Create();
 
         public ComponentVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor,
             ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser,

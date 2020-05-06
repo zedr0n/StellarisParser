@@ -28,7 +28,7 @@ namespace StellarisParser.Core.Components
 
         public override double VisitKeyval(stellarisParser.KeyvalContext context)
         {
-            if (context.key().id().GetText() != Specs.MODIFIER_ID)
+            if (context.key().id().GetText() != Specs.MODIFIER_ID && context.key().id().GetText() != Specs.SHIP_MODIFIER_ID)
                 return double.NaN;
 
             var evasion = _specVisitor.Visit(context.val());

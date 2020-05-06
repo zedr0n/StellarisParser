@@ -25,9 +25,10 @@ namespace StellarisParser.Core
             container.Register<IStellarisVisitor<TechsList>, TechsListVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<Variables>, VariableVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<ModDescriptor>, DescriptorVisitor>(Lifestyle.Singleton);
-            container.Register<IStellarisVisitor<Component>, ComponentVisitor>(Lifestyle.Singleton);
+            //container.Register<IStellarisVisitor<Component>, ComponentVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<Thruster>, ThrusterVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<Reactor>, ReactorVisitor>(Lifestyle.Singleton);
+            container.Register<IStellarisVisitor<FtlDrive>, FtlDriveVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<ComponentsList>, ComponentsListVisitor>(Lifestyle.Singleton);
             
             container.Register<AreaVisitor>(Lifestyle.Singleton);
@@ -44,6 +45,13 @@ namespace StellarisParser.Core
             container.Register<ComponentSetVisitor>(Lifestyle.Singleton);
             container.Register<ThrusterVisitor>(Lifestyle.Singleton);
             container.Register<ReactorVisitor>(Lifestyle.Singleton);
+            
+            container.Register<ShipWindupVisitor>(Lifestyle.Singleton);
+            container.Register<JumpDriveRangeMultiplierVisitor>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<JumpDriveRangeMultiplierVisitor>>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<ShipWindupVisitor>>(Lifestyle.Singleton);
+            container.Register<JumpDriveVisitor>(Lifestyle.Singleton);
+            container.Register<FtlDriveVisitor>(Lifestyle.Singleton);
             
             container.Register<TechModifier>(Lifestyle.Singleton);
             container.Register<TechsModifier>(Lifestyle.Singleton);

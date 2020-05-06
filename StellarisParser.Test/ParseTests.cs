@@ -263,23 +263,6 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
         }
 
         [Fact]
-        public void CanParseComponent()
-        {
-            var container = CreateContainer();
-            var parser = container.GetInstance<Parser>();
-            parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
-            parser.ReadVars(Specs.COMPONENT_PATH + "\\00_utilities_thrusters.txt");
-            //parser.ReadVars("../../../../00_scripted_variables.txt");
-
-            var component = parser.RunVisitor<Component>(Thruster);
-            Assert.Equal(-20, component.Power);
-            Assert.Single(component.Prerequisites);
-            
-            var thruster = parser.RunVisitor<Thruster>(Thruster);
-            Assert.Equal(3, thruster.Evasion);
-        }
-        
-        [Fact]
         public void CanParseThruster()
         {
             var container = CreateContainer();
@@ -301,6 +284,19 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
 
             var components = container.GetInstance<ComponentsList>();
             Assert.Equal(46, components.Count);
+        }
+
+        [Fact]
+        public void CanParseDrive()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+            parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_drives.txt");
+
+            var components = container.GetInstance<ComponentsList>();
+            Assert.Equal(6, components.Count);
+            Assert.Equal(-0.8, components.ToList().OfType<FtlDrive>().Min(f => f.WindupMultiplier));
         }
     }
 }
