@@ -272,6 +272,7 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
 
             var components = container.GetInstance<ComponentsList>();
             Assert.Equal(30, components.Count);
+            Assert.Equal(1.25, components.ToList().OfType<Thruster>().Max(t => t.SpeedMultiplier));
         }
         
         [Fact]
@@ -284,6 +285,7 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
 
             var components = container.GetInstance<ComponentsList>();
             Assert.Equal(46, components.Count);
+            Assert.Equal(10000,components.ToList().OfType<Reactor>().Max(r => r.Power));
         }
 
         [Fact]
