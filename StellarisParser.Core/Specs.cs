@@ -22,6 +22,8 @@ namespace StellarisParser.Core
         public const string BASE_VARS = BASE_PATH + "\\common\\scripted_variables\\00_scripted_variables.txt";
         public const string TECH_PATH = BASE_PATH + "\\common\\technology";
         public const string COMPONENT_PATH = BASE_PATH + "\\common\\component_templates";
+
+        public const string NHSC_PATH = "F:\\steam\\steamapps\\workshop\\content\\281990\\1885775216";
         
         public enum ComponentType
         {

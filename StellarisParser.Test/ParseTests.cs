@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using StellarisParser.Core;
 using StellarisParser.Core.Components;
@@ -146,11 +147,38 @@ namespace StellarisParser.Test
             var str = parser.ApplyModifications(file);
             var target = @"
 
-tech_destroyers   = { cost   = @tier2cost1     area   = engineering    tier   = 2    category   = { voidcraft  }    prerequisites   = { ""tech_corvettes""  }    weight   = @tier2weight1     gateway   = ship    potential   = { }     }   
-tech_solar_panel_network   = { area   = engineering    tier   = 0    category   = { voidcraft  }    prerequisites   = { ""tech_starbase_2""  }    start_tech   = yes    potential   = { }     }   ";
+tech_destroyers   = { cost   = @tier2cost1     area   = engineering    tier   = 2    category   = { voidcraft  }    prerequisites   = { ""tech_corvettes""  }    weight   = @tier2weight1     gateway   = ship    potential   = { has_global_flag   = dummy     }     }   
+tech_solar_panel_network   = { area   = engineering    tier   = 0    category   = { voidcraft  }    prerequisites   = { ""tech_starbase_2""  }    start_tech   = yes    potential   = { has_global_flag   = dummy     }     }   ";               
             target = target.Replace("\r", "");
                 
             Assert.Equal(target, str);
+        }
+
+        [Fact]
+        public void CanDisableAdvReactor2()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+            
+            parser.ReadVars(Specs.BASE_VARS);
+            foreach (var f in Directory.GetFiles(Specs.TECH_PATH))
+                parser.ReadTechs(f);
+
+
+            const string varsDir = Specs.NHSC_PATH + "\\common\\scripted_variables";
+            foreach(var f in Directory.GetFiles(varsDir))
+                parser.ReadVars(f);
+            const string techDir = Specs.NHSC_PATH + "\\common\\technology";
+            foreach (var f in Directory.GetFiles(techDir))
+                parser.ReadTechs(f);
+
+            var techs = container.GetInstance<TechsList>();
+
+            var tech = techs["nhsc_tech_advanced_reactor_1"];
+            Assert.NotNull(tech);
+            tech.Disable = true;
+            
+            var str = parser.ApplyModifications(File.ReadAllText(tech.Source));
         }
 
         [Fact]

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
@@ -11,6 +12,14 @@ namespace StellarisParser.Core
 {
     public static class ParseTreeExtensions
     {
+        public static bool IsAllComments(this string text)
+        {
+            var lines = text.Split("\n");
+            if (lines.All(l => l.StartsWith("#")))
+                return true;
+            return false;
+        }
+        
         public static string GetTextWithWhitespace(this IParseTree context)
         {
             if (context is TerminalNodeImpl terminalNode)
@@ -58,10 +67,13 @@ namespace StellarisParser.Core
             
             return str;
         }
-        
-        
+
+
         public T RunVisitor<T>(string text)
         {
+            if (text == "" || text.IsAllComments())
+                return default;
+            
             var inputStream = new AntlrInputStream(text);
             var lexer = new stellarisLexer(inputStream);
             var commonTokenStream = new CommonTokenStream(lexer);

@@ -23,6 +23,9 @@ namespace StellarisParser.Core
         
         public void Aggregate(Variables other, string source = null)
         {
+            if (other == null)
+                return;
+            
             if (source != null)
                 SourceMaps[source] = new Dictionary<string, string>(other.Map);
             
