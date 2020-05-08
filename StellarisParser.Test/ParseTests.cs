@@ -386,5 +386,20 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             Assert.Equal( 12.5, components.ToList().OfType<Shield>().Max(s => s.ShieldRegen));
         }
 
+        [Fact]
+        public void CanParseShieldBooster()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+            parser.ReadVars(Specs.BASE_PATH + "\\common\\scripted_variables\\02_scripted_variables_component_cost.txt");
+            parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_utilities_shields.txt");
+            parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_aux.txt");
+
+            var components = container.GetInstance<ComponentsList>();
+            Assert.Equal(1, components.Count);
+            Assert.Equal( 0.1, components.ToList().OfType<Shield>().Max(s => s.ShieldMultiplier));
+        }
+
     }
 }

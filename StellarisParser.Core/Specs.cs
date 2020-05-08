@@ -34,6 +34,7 @@ namespace StellarisParser.Core
         public const string HULL_ID = "ship_hull_add";
         public const string SHIELD_REGEN_ID = "ship_shield_regen_add_static";
         public const string SHIELD_ID = "ship_shield_add";
+        public const string SHIELD_MULT_ID = "ship_shield_mult";
         
         public const string SET_ID = "component_set";
 

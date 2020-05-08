@@ -6,11 +6,13 @@ namespace StellarisParser.Core.Components.Shields
     {
         private readonly ModifierVisitor<ShieldAddVisitor> _shieldAddVisitor;
         private readonly ModifierVisitor<ShieldRegenVisitor> _shieldRegenVisitor;
+        private readonly ModifierVisitor<ShieldMultiplierVisitor> _shieldMultVisitor;
         
-        public ShieldVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser, ComponentsList componentsList, ComponentSets componentSets, ModifierVisitor<ShieldAddVisitor> shieldAddVisitor, ModifierVisitor<ShieldRegenVisitor> shieldRegenVisitor) : base(keyVisitor, powerVisitor, prereqVisitor, componentSetVisitor, upgradesToVisitor, parser, componentsList, componentSets)
+        public ShieldVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser, ComponentsList componentsList, ComponentSets componentSets, ModifierVisitor<ShieldAddVisitor> shieldAddVisitor, ModifierVisitor<ShieldRegenVisitor> shieldRegenVisitor, ModifierVisitor<ShieldMultiplierVisitor> shieldMultVisitor) : base(keyVisitor, powerVisitor, prereqVisitor, componentSetVisitor, upgradesToVisitor, parser, componentsList, componentSets)
         {
             _shieldAddVisitor = shieldAddVisitor;
             _shieldRegenVisitor = shieldRegenVisitor;
+            _shieldMultVisitor = shieldMultVisitor;
         }
 
         public override Component Create()
@@ -26,6 +28,7 @@ namespace StellarisParser.Core.Components.Shields
 
             shield.ShieldRegen = _shieldRegenVisitor.Visit(context.val());
             shield.ShieldAdd = _shieldAddVisitor.Visit(context.val());
+            shield.ShieldMultiplier = _shieldMultVisitor.Visit(context.val());
             
             return shield;
         }

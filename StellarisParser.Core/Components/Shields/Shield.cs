@@ -6,5 +6,7 @@ namespace StellarisParser.Core.Components.Shields
         
         public double ShieldAdd { get; set; }
         public double ShieldRegen { get; set; }
+        // for shield boosters
+        public double ShieldMultiplier { get; set; }
     }
 }

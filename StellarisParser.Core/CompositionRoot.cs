@@ -97,6 +97,8 @@ namespace StellarisParser.Core
             container.Register<ModifierVisitor<ShieldRegenVisitor>>(Lifestyle.Singleton);
             container.Register<ArmorVisitor>(Lifestyle.Singleton);
             
+            container.Register<ShieldMultiplierVisitor>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<ShieldMultiplierVisitor>>(Lifestyle.Singleton);
             container.Register<ShieldVisitor>(Lifestyle.Singleton);
             
             container.Register<TechModifier>(Lifestyle.Singleton);
