@@ -12,7 +12,8 @@ namespace StellarisParser.Core.Components
             { THRUSTER_SET, ComponentType.THRUSTER },
             { REACTOR_SET, ComponentType.REACTOR},
             { FTL_SET, ComponentType.FTL_DRIVE },
-            { AFTERBURNER_SET, ComponentType.AFTERBURNER }
+            { AFTERBURNER_SET, ComponentType.AFTERBURNER },
+            { SENSOR_SET, ComponentType.SENSOR}
         };
 
         public void Aggregate(ComponentSets other)

@@ -6,6 +6,7 @@ using StellarisParser.Core.Components;
 using StellarisParser.Core.Components.Afterburners;
 using StellarisParser.Core.Components.Drives;
 using StellarisParser.Core.Components.Reactors;
+using StellarisParser.Core.Components.Sensors;
 using StellarisParser.Core.Components.Thrusters;
 using StellarisParser.Core.Techs;
 using Xunit;
@@ -321,5 +322,20 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             Assert.Equal(2, components.Count);
             Assert.Equal(0.2, components.ToList().OfType<Afterburner>().Max(a => a.Speed));
         }
+        
+        [Fact]
+        public void CanParseSensor()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+            parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_required_sets.txt");
+            parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_sensors.txt");
+
+            var components = container.GetInstance<ComponentsList>();
+            Assert.Equal(4, components.Count);
+            Assert.Equal( 4, components.ToList().OfType<Sensor>().Max(s => s.SensorRange));
+        }
+
     }
 }

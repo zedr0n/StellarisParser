@@ -12,6 +12,9 @@ namespace StellarisParser.Core
         public const string KEY_ID = "key";
         public const string POWER_ID = "power";
         public const string UPGRADES_TO_ID = "upgrades_to";
+
+        public const string SENSOR_RANGE_ID = "sensor_range";
+        public const string HYPERLANE_RANGE_ID = "hyperlane_range";
         
         public const string EVASION_ID = "ship_evasion_add";
         public const string EVASION_MULT_ID = "ship_evasion_mult";
@@ -28,7 +31,8 @@ namespace StellarisParser.Core
         public const string THRUSTER_SET = "thruster_components";
         public const string REACTOR_SET = "power_core";
         public const string FTL_SET = "ftl_components";
-        public const string AFTERBURNER_SET = "AFTERBURNER";
+        public const string AFTERBURNER_SET = "afterburner";
+        public const string SENSOR_SET = "sensor_components";
         
         public const string BASE_PATH = "f:\\steam\\steamapps\\common\\Stellaris";
         public const string BASE_VARS = BASE_PATH + "\\common\\scripted_variables\\00_scripted_variables.txt";
@@ -44,6 +48,7 @@ namespace StellarisParser.Core
             REACTOR,
             FTL_DRIVE,
             AFTERBURNER,
+            SENSOR,
             UNKNOWN
         }
     }

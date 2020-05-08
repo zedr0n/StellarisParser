@@ -7,6 +7,7 @@ using StellarisParser.Core.Components;
 using StellarisParser.Core.Components.Afterburners;
 using StellarisParser.Core.Components.Drives;
 using StellarisParser.Core.Components.Reactors;
+using StellarisParser.Core.Components.Sensors;
 using StellarisParser.Core.Components.Thrusters;
 using StellarisParser.Core.Techs;
 
@@ -67,6 +68,10 @@ namespace StellarisParser.Core
             container.Register<ModifierVisitor<SpeedMultiplierVisitor>>(Lifestyle.Singleton);
             container.Register<AfterburnerVisitor>(Lifestyle.Singleton);
             
+            container.Register<SensorRangeVisitor>(Lifestyle.Singleton);
+            container.Register<HyperlaneRangeVisitor>(Lifestyle.Singleton);
+            container.Register<SensorVisitor>(Lifestyle.Singleton);
+            
             container.Register<TechModifier>(Lifestyle.Singleton);
             container.Register<TechsModifier>(Lifestyle.Singleton);
             
@@ -83,7 +88,8 @@ namespace StellarisParser.Core
                 typeof(ThrusterVisitor),
                 typeof(AfterburnerVisitor),
                 typeof(ReactorVisitor),
-                typeof(FtlDriveVisitor)
+                typeof(FtlDriveVisitor),
+                typeof(SensorVisitor)
             });
         }
     }
