@@ -5,10 +5,12 @@ using System.Reflection;
 using SimpleInjector;
 using StellarisParser.Core.Components;
 using StellarisParser.Core.Components.Afterburners;
+using StellarisParser.Core.Components.Armors;
 using StellarisParser.Core.Components.CombatComputers;
 using StellarisParser.Core.Components.Drives;
 using StellarisParser.Core.Components.Reactors;
 using StellarisParser.Core.Components.Sensors;
+using StellarisParser.Core.Components.Shields;
 using StellarisParser.Core.Components.Thrusters;
 using StellarisParser.Core.Techs;
 
@@ -84,6 +86,18 @@ namespace StellarisParser.Core
             container.Register<WeaponRangeVisitor>(Lifestyle.Singleton);
             container.Register<ModifierVisitor<WeaponRangeVisitor>>(Lifestyle.Singleton);
             container.Register<CombatComputerVisitor>(Lifestyle.Singleton);
+     
+            container.Register<ArmorAddVisitor>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<ArmorAddVisitor>>(Lifestyle.Singleton);
+            container.Register<HullAddVisitor>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<HullAddVisitor>>(Lifestyle.Singleton);
+            container.Register<ShieldAddVisitor>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<ShieldAddVisitor>>(Lifestyle.Singleton);
+            container.Register<ShieldRegenVisitor>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<ShieldRegenVisitor>>(Lifestyle.Singleton);
+            container.Register<ArmorVisitor>(Lifestyle.Singleton);
+            
+            container.Register<ShieldVisitor>(Lifestyle.Singleton);
             
             container.Register<TechModifier>(Lifestyle.Singleton);
             container.Register<TechsModifier>(Lifestyle.Singleton);
@@ -103,7 +117,9 @@ namespace StellarisParser.Core
                 typeof(ReactorVisitor),
                 typeof(FtlDriveVisitor),
                 typeof(SensorVisitor),
-                typeof(CombatComputerVisitor)
+                typeof(CombatComputerVisitor),
+                typeof(ArmorVisitor),
+                typeof(ShieldVisitor)
             });
         }
     }

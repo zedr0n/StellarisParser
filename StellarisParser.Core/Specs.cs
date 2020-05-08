@@ -30,6 +30,10 @@ namespace StellarisParser.Core
         public const string ACCURACY_ID = "ship_accuracy_add";
         public const string WEAPON_RANGE_MULT_ID = "ship_weapon_range_mult";
         public const string ENGAGEMENT_RANGE_MULT_ID = "ship_engagement_range_mult";
+        public const string ARMOR_ID = "ship_armor_add";
+        public const string HULL_ID = "ship_hull_add";
+        public const string SHIELD_REGEN_ID = "ship_shield_regen_add_static";
+        public const string SHIELD_ID = "ship_shield_add";
         
         public const string SET_ID = "component_set";
 
@@ -39,6 +43,8 @@ namespace StellarisParser.Core
         public const string AFTERBURNER_SET = "afterburner";
         public const string SENSOR_SET = "sensor_components";
         public const string COMBAT_COMPUTER_SET = "combat_computers";
+        public const string ARMOR_SET = "armor";
+        public const string SHIELD_SET = "shield";
         
         public const string BASE_PATH = "f:\\steam\\steamapps\\common\\Stellaris";
         public const string BASE_VARS = BASE_PATH + "\\common\\scripted_variables\\00_scripted_variables.txt";
@@ -57,6 +63,9 @@ namespace StellarisParser.Core
             AFTERBURNER,
             SENSOR,
             COMBAT_COMPUTER,
+            ARMOR,
+            SHIELD,
+            AUXILARY,
             UNKNOWN
         }
     }
