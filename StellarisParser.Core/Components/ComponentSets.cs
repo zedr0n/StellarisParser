@@ -13,7 +13,8 @@ namespace StellarisParser.Core.Components
             { REACTOR_SET, ComponentType.REACTOR},
             { FTL_SET, ComponentType.FTL_DRIVE },
             { AFTERBURNER_SET, ComponentType.AFTERBURNER },
-            { SENSOR_SET, ComponentType.SENSOR}
+            { SENSOR_SET, ComponentType.SENSOR},
+            { COMBAT_COMPUTER_SET, ComponentType.COMBAT_COMPUTER}
         };
 
         public void Aggregate(ComponentSets other)
@@ -25,7 +26,7 @@ namespace StellarisParser.Core.Components
             }
         }
         
-        public ComponentType this[string id] => _componentTypes.ContainsKey(id) ? _componentTypes[id] : ComponentType.UNKNOWN;
+        public ComponentType this[string id] => id == null ? ComponentType.UNKNOWN : _componentTypes.ContainsKey(id) ? _componentTypes[id] : ComponentType.UNKNOWN;
         
         public void Add(string componentSet, ComponentType type = ComponentType.UNKNOWN)
         {

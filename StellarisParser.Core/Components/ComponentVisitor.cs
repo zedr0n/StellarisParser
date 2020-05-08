@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Antlr4.Runtime.Tree;
 using StellarisParser.Core.Techs;
 
@@ -41,7 +43,12 @@ namespace StellarisParser.Core.Components
 
         public override Component VisitKeyval(stellarisParser.KeyvalContext context)
         {
-            var componentsSet = _componentSetVisitor.Visit(context.val()).Replace('"'.ToString(),"");
+            var componentsSet = _componentSetVisitor.Visit(context.val())?.Replace('"'.ToString(),"");
+            if (componentsSet == null)
+            {
+                var str = context.GetText();
+            }
+
             var componentType = _componentSets[componentsSet];
             
             if (componentType != ComponentType)

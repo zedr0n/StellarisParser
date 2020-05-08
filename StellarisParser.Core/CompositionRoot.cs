@@ -5,6 +5,7 @@ using System.Reflection;
 using SimpleInjector;
 using StellarisParser.Core.Components;
 using StellarisParser.Core.Components.Afterburners;
+using StellarisParser.Core.Components.CombatComputers;
 using StellarisParser.Core.Components.Drives;
 using StellarisParser.Core.Components.Reactors;
 using StellarisParser.Core.Components.Sensors;
@@ -72,6 +73,18 @@ namespace StellarisParser.Core
             container.Register<HyperlaneRangeVisitor>(Lifestyle.Singleton);
             container.Register<SensorVisitor>(Lifestyle.Singleton);
             
+            container.Register<AccuracyVisitor>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<AccuracyVisitor>>(Lifestyle.Singleton);
+            container.Register<EngagementRangeMultiplierVisitor>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<EngagementRangeMultiplierVisitor>>(Lifestyle.Singleton);
+            container.Register<FireRateMultiplierVisitor>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<FireRateMultiplierVisitor>>(Lifestyle.Singleton);
+            container.Register<TrackingVisitor>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<TrackingVisitor>>(Lifestyle.Singleton);
+            container.Register<WeaponRangeVisitor>(Lifestyle.Singleton);
+            container.Register<ModifierVisitor<WeaponRangeVisitor>>(Lifestyle.Singleton);
+            container.Register<CombatComputerVisitor>(Lifestyle.Singleton);
+            
             container.Register<TechModifier>(Lifestyle.Singleton);
             container.Register<TechsModifier>(Lifestyle.Singleton);
             
@@ -89,7 +102,8 @@ namespace StellarisParser.Core
                 typeof(AfterburnerVisitor),
                 typeof(ReactorVisitor),
                 typeof(FtlDriveVisitor),
-                typeof(SensorVisitor)
+                typeof(SensorVisitor),
+                typeof(CombatComputerVisitor)
             });
         }
     }

@@ -25,6 +25,11 @@ namespace StellarisParser.Core
         public const string MODIFIER_ID = "modifier";
         public const string SHIP_MODIFIER_ID = "ship_modifier";
         public const string JUMPDRIVE_ID = "jumpdrive";
+        public const string FIRERATE_ID = "ship_fire_rate_mult";
+        public const string TRACKING_ID = "ship_tracking_add";
+        public const string ACCURACY_ID = "ship_accuracy_add";
+        public const string WEAPON_RANGE_MULT_ID = "ship_weapon_range_mult";
+        public const string ENGAGEMENT_RANGE_MULT_ID = "ship_engagement_range_mult";
         
         public const string SET_ID = "component_set";
 
@@ -33,6 +38,7 @@ namespace StellarisParser.Core
         public const string FTL_SET = "ftl_components";
         public const string AFTERBURNER_SET = "afterburner";
         public const string SENSOR_SET = "sensor_components";
+        public const string COMBAT_COMPUTER_SET = "combat_computers";
         
         public const string BASE_PATH = "f:\\steam\\steamapps\\common\\Stellaris";
         public const string BASE_VARS = BASE_PATH + "\\common\\scripted_variables\\00_scripted_variables.txt";
@@ -49,6 +55,7 @@ namespace StellarisParser.Core
             FTL_DRIVE,
             AFTERBURNER,
             SENSOR,
+            COMBAT_COMPUTER,
             UNKNOWN
         }
     }
