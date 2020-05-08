@@ -50,12 +50,12 @@ namespace StellarisParser.Console
             else 
                 System.Console.WriteLine(file + " not found!");
         }
-        
+
         private static void ReadComponents(string file)
         {
             if (Excludes.Contains(file))
                 return;
-            
+
             if (!file.EndsWith(".txt"))
                 return;
 
@@ -65,28 +65,62 @@ namespace StellarisParser.Console
 
                 try
                 {
-                    if(!read)
+                    if (!read)
                         System.Console.Write("Reading " + file + "...");
-                    
+
                     _parser.ReadComponents(file);
-                    if(!read)
+                    if (!read)
                         System.Console.WriteLine(" OK!");
-                    
+
                 }
-                catch (Exception )
+                catch (Exception)
                 {
-                    if(!read)
+                    if (!read)
                         System.Console.WriteLine(" Error!");
                 }
             }
-            else 
+            else
                 System.Console.WriteLine(file + " not found!");
         }
-        
+
+        private static void ReadComponentSets(string file)
+        {
+                if (Excludes.Contains(file))
+                    return;
+
+                if (!file.EndsWith(".txt"))
+                    return;
+
+                if (File.Exists(file))
+                {
+
+                    try
+                    {
+                        System.Console.Write("Reading " + file + "...");
+
+                        _parser.ReadComponentSets(file);
+                        System.Console.WriteLine(" OK!");
+
+                    }
+                    catch (Exception)
+                    {
+                        System.Console.WriteLine(" Error!");
+                    }
+                }
+                else
+                    System.Console.WriteLine(file + " not found!");
+        }
+
         private static void ReadTechs(string directory)
         {
             foreach (var file in Directory.GetFiles(directory))
                 ReadTech(file);
+        }
+
+        private static void ReadAllComponentSets(string directory)
+        {
+            foreach (var file in Directory.GetFiles(directory))
+                ReadComponentSets(file);
         }
         
         private static void ReadAllComponents(string directory)
@@ -141,6 +175,10 @@ namespace StellarisParser.Console
                 var techDir = modDir + "\\common\\technology";
                 if (Directory.Exists(techDir))
                     ReadAllTechs(techDir);
+
+                var setDir = modDir + COMPONENT_SETS_POSTFIX;
+                if (Directory.Exists(setDir))
+                    ReadAllComponentSets(setDir);
                 var componentDir = modDir + "\\common\\component_templates";
                 if (Directory.Exists(componentDir))
                     ReadAllComponents(componentDir);
@@ -167,6 +205,7 @@ namespace StellarisParser.Console
             System.Console.WriteLine("Reading base techs...");
             ReadAllTechs(TECH_PATH);
             System.Console.WriteLine("Reading base components...");
+            ReadAllComponentSets(COMPONENT_SETS_PATH);
             ReadAllComponents(COMPONENT_PATH);
 
             foreach (var d in args)
