@@ -46,7 +46,7 @@ namespace StellarisParser.Core.Components
             if (!_guesses.Any(g => componentSet.ToUpper().Contains(g.Key.ToUpper())))
                 return false;
             
-            var guess = _guesses.SingleOrDefault(g => componentSet.ToUpper().Contains(g.Key.ToUpper()));
+            var guess = _guesses.FirstOrDefault(g => componentSet.ToUpper().Contains(g.Key.ToUpper()));
             _componentTypes[componentSet] = guess.Value;
             return true;
         }
