@@ -6,6 +6,7 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using SimpleInjector;
+using StellarisParser.Core.Components;
 using StellarisParser.Core.Techs;
 
 namespace StellarisParser.Core
@@ -44,9 +45,10 @@ namespace StellarisParser.Core
     {
         private readonly Container _container;
         private readonly Variables _vars;
+        private readonly ComponentSets _componentSets;
         private readonly TechsList _techsList;
         private readonly TechsModifier _techsModifier;
-        private readonly Components.ComponentsList _componentsList;
+        private readonly ComponentsList _componentsList;
         public string CurrentSource { get; private set; }
 
 
@@ -108,6 +110,13 @@ namespace StellarisParser.Core
             _vars.Aggregate(RunVisitor<Variables>(File.ReadAllText(file)));
             _componentsList.Aggregate(RunVisitor<Components.ComponentsList>(File.ReadAllText(file)));
         }
+
+        public void ReadComponentSets(string file)
+        {
+            CurrentSource = file;
+            _componentSets.Aggregate(RunVisitor<ComponentSets>(File.ReadAllText(file)));
+        }
+        
         
         public TechsList ReadTechs(string file)
         {
@@ -140,13 +149,14 @@ namespace StellarisParser.Core
                 ParseTreeWalker.Default.Walk(listener, context);    
         }
 
-        public Parser(Container container, Variables vars, TechsList techsList, Components.ComponentsList componentsList, TechsModifier techsModifier)
+        public Parser(Container container, Variables vars, TechsList techsList, Components.ComponentsList componentsList, TechsModifier techsModifier, ComponentSets componentSets)
         {
             _container = container;
             _vars = vars;
             _techsList = techsList;
             _componentsList = componentsList;
             _techsModifier = techsModifier;
+            _componentSets = componentSets;
         }
     }
 }

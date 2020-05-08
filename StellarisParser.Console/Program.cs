@@ -41,7 +41,7 @@ namespace StellarisParser.Console
                         System.Console.WriteLine(" OK!");
                     
                 }
-                catch (Exception e)
+                catch (Exception )
                 {
                     if (!read)
                         System.Console.WriteLine(" Error!");
@@ -73,7 +73,7 @@ namespace StellarisParser.Console
                         System.Console.WriteLine(" OK!");
                     
                 }
-                catch (Exception e)
+                catch (Exception )
                 {
                     if(!read)
                         System.Console.WriteLine(" Error!");
@@ -117,7 +117,7 @@ namespace StellarisParser.Console
                     //_vars.Aggregate(_parser.RunVisitor<Variables>(File.ReadAllText(file)));
                     System.Console.WriteLine(" OK!");
                 }
-                catch (Exception e)
+                catch (Exception )
                 {
                     System.Console.WriteLine(" Error!");
                 }

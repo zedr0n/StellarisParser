@@ -3,6 +3,10 @@ using System.IO;
 using System.Linq;
 using StellarisParser.Core;
 using StellarisParser.Core.Components;
+using StellarisParser.Core.Components.Afterburners;
+using StellarisParser.Core.Components.Drives;
+using StellarisParser.Core.Components.Reactors;
+using StellarisParser.Core.Components.Thrusters;
 using StellarisParser.Core.Techs;
 using Xunit;
 using Component = StellarisParser.Core.Components.Component;
@@ -268,6 +272,7 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
             parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_required_sets.txt");
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_thrusters.txt");
 
             var components = container.GetInstance<ComponentsList>();
@@ -281,6 +286,7 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
             parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_required_sets.txt");
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_reactors.txt");
 
             var components = container.GetInstance<ComponentsList>();
@@ -294,6 +300,7 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
             parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_required_sets.txt");
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_drives.txt");
 
             var components = container.GetInstance<ComponentsList>();
@@ -307,6 +314,7 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
             parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_utilities_afterburners.txt");
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_afterburners.txt");
 
             var components = container.GetInstance<ComponentsList>();

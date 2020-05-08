@@ -1,4 +1,4 @@
-namespace StellarisParser.Core.Components
+namespace StellarisParser.Core.Components.Thrusters
 {
     public class EvasionVisitor : SpecVisitorDouble
     {

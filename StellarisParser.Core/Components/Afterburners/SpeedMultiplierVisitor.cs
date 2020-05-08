@@ -1,4 +1,4 @@
-namespace StellarisParser.Core.Components
+namespace StellarisParser.Core.Components.Afterburners
 {
     public class SpeedMultiplierVisitor : SpecVisitorDouble
     {

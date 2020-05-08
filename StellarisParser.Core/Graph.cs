@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using QuickGraph;
 using QuickGraph.Serialization;
 using StellarisParser.Core.Components;
+using StellarisParser.Core.Components.Thrusters;
 using StellarisParser.Core.Techs;
 
 namespace StellarisParser.Core

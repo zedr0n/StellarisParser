@@ -12,6 +12,7 @@ namespace StellarisParser.Core.Components
     public abstract class ComponentVisitor : StellarisVisitor<Component>, IComponentVisitor
     {
         private readonly ComponentsList _componentsList;
+        private readonly ComponentSets _componentSets;
         
         private readonly KeyVisitor _keyVisitor;
         private readonly PowerVisitor _powerVisitor;
@@ -20,19 +21,20 @@ namespace StellarisParser.Core.Components
         private readonly UpgradesToVisitor _upgradesToVisitor;
         
         private readonly Parser _parser;
-        protected abstract string ComponentSet { get; }
+        protected Specs.ComponentType ComponentType => Create().ComponentType;
         
         public abstract Component Create();
 
         public ComponentVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor,
             ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser,
-            ComponentsList componentsList)
+            ComponentsList componentsList, ComponentSets componentSets)
         {
             _keyVisitor = keyVisitor;
             _powerVisitor = powerVisitor;
             _prereqVisitor = prereqVisitor;
             _parser = parser;
             _componentsList = componentsList;
+            _componentSets = componentSets;
             _upgradesToVisitor = upgradesToVisitor;
             _componentSetVisitor = componentSetVisitor;
         }
@@ -40,7 +42,9 @@ namespace StellarisParser.Core.Components
         public override Component VisitKeyval(stellarisParser.KeyvalContext context)
         {
             var componentsSet = _componentSetVisitor.Visit(context.val()).Replace('"'.ToString(),"");
-            if (!componentsSet.StartsWith(ComponentSet))
+            var componentType = _componentSets[componentsSet];
+            
+            if (componentType != ComponentType)
                 return null;
 
             var key = _keyVisitor.Visit(context.val());

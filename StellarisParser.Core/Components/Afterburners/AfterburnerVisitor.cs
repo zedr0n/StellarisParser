@@ -1,4 +1,4 @@
-namespace StellarisParser.Core.Components
+namespace StellarisParser.Core.Components.Afterburners
 {
     public class AfterburnerVisitor : ComponentVisitor, IStellarisVisitor<Afterburner>
     {
@@ -6,13 +6,15 @@ namespace StellarisParser.Core.Components
         private readonly ModifierVisitor<SpeedMultiplierVisitor> _speedVisitor;
 
         
-        public AfterburnerVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser, ComponentsList componentsList, ModifierVisitor<EvasionMultiplierVisitor> evasionVisitor, ModifierVisitor<SpeedMultiplierVisitor> speedVisitor) : base(keyVisitor, powerVisitor, prereqVisitor, componentSetVisitor, upgradesToVisitor, parser, componentsList)
+        public AfterburnerVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser, 
+            ComponentsList componentsList, ComponentSets componentSets, 
+            ModifierVisitor<EvasionMultiplierVisitor> evasionVisitor, ModifierVisitor<SpeedMultiplierVisitor> speedVisitor) 
+            : base(keyVisitor, powerVisitor, prereqVisitor, componentSetVisitor, upgradesToVisitor, parser, componentsList, componentSets)
         {
             _evasionVisitor = evasionVisitor;
             _speedVisitor = speedVisitor;
         }
 
-        protected override string ComponentSet => Specs.AFTERBURNER_SET;
         public override Component Create()
         {
             return new Afterburner();

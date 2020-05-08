@@ -1,4 +1,4 @@
-namespace StellarisParser.Core.Components
+namespace StellarisParser.Core.Components.Drives
 {
     public class JumpDriveVisitor : SpecVisitor<bool>
     {

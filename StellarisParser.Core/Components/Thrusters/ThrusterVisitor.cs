@@ -1,16 +1,18 @@
-namespace StellarisParser.Core.Components
+namespace StellarisParser.Core.Components.Thrusters
 {
     public class ThrusterVisitor : ComponentVisitor, IStellarisVisitor<Thruster>
     {
         private readonly ModifierVisitor<EvasionVisitor> _evasionVisitor;
         private readonly ModifierVisitor<BaseSpeedMultiplierVisitor> _speedVisitor;
 
-        protected override string ComponentSet => Specs.THRUSTER_SET;
         public override Component Create() => new Thruster(); 
 
         public ThrusterVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor,
-            ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser, ComponentsList componentsList, ModifierVisitor<EvasionVisitor> evasionVisitor,
-            ModifierVisitor<BaseSpeedMultiplierVisitor> speedVisitor) : base(keyVisitor, powerVisitor, prereqVisitor, componentSetVisitor, upgradesToVisitor, parser, componentsList)
+            ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, 
+            Parser parser, ComponentsList componentsList, ComponentSets componentSets, 
+            ModifierVisitor<EvasionVisitor> evasionVisitor,
+            ModifierVisitor<BaseSpeedMultiplierVisitor> speedVisitor) : 
+            base(keyVisitor, powerVisitor, prereqVisitor, componentSetVisitor, upgradesToVisitor, parser, componentsList, componentSets)
         {
             _evasionVisitor = evasionVisitor;
             _speedVisitor = speedVisitor;

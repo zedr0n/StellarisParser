@@ -1,6 +1,4 @@
-using System;
-
-namespace StellarisParser.Core.Components
+namespace StellarisParser.Core.Components.Drives
 {
     public class FtlDriveVisitor : ComponentVisitor, IStellarisVisitor<FtlDrive>
     {
@@ -8,15 +6,18 @@ namespace StellarisParser.Core.Components
         private readonly ModifierVisitor<JumpDriveRangeMultiplierVisitor> _rangeVisitor;
         private readonly JumpDriveVisitor _jumpDriveVisitor;
         
-        public FtlDriveVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser, ComponentsList componentsList, ModifierVisitor<ShipWindupVisitor> shipWindupVisitor, ModifierVisitor<JumpDriveRangeMultiplierVisitor> rangeVisitor, JumpDriveVisitor jumpDriveVisitor) : base(keyVisitor, powerVisitor, prereqVisitor, componentSetVisitor, upgradesToVisitor, parser, componentsList)
+        public FtlDriveVisitor(
+            KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor,
+            Parser parser,
+            ComponentsList componentsList, ComponentSets componentSets,
+            ModifierVisitor<ShipWindupVisitor> shipWindupVisitor, ModifierVisitor<JumpDriveRangeMultiplierVisitor> rangeVisitor, JumpDriveVisitor jumpDriveVisitor)
+            : base(keyVisitor, powerVisitor, prereqVisitor, componentSetVisitor, upgradesToVisitor, parser, componentsList, componentSets)
         {
             _shipWindupVisitor = shipWindupVisitor;
             _rangeVisitor = rangeVisitor;
             _jumpDriveVisitor = jumpDriveVisitor;
         }
-
-        protected override string ComponentSet => Specs.FTL_SET;
-
+        
         public override Component Create()
         {
             return new FtlDrive();

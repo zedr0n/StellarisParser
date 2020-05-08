@@ -1,12 +1,10 @@
-namespace StellarisParser.Core.Components
+namespace StellarisParser.Core.Components.Reactors
 {
     public class ReactorVisitor : ComponentVisitor, IStellarisVisitor<Reactor>
     {
-        public ReactorVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser, ComponentsList componentsList) : base(keyVisitor, powerVisitor, prereqVisitor, componentSetVisitor, upgradesToVisitor, parser, componentsList)
+        public ReactorVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser, ComponentsList componentsList, ComponentSets componentSets) : base(keyVisitor, powerVisitor, prereqVisitor, componentSetVisitor, upgradesToVisitor, parser, componentsList, componentSets)
         {
         }
-
-        protected override string ComponentSet => Specs.REACTOR_SET;
 
         public override Component Create()
         {

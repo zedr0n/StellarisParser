@@ -4,6 +4,10 @@ using System.Linq;
 using System.Reflection;
 using SimpleInjector;
 using StellarisParser.Core.Components;
+using StellarisParser.Core.Components.Afterburners;
+using StellarisParser.Core.Components.Drives;
+using StellarisParser.Core.Components.Reactors;
+using StellarisParser.Core.Components.Thrusters;
 using StellarisParser.Core.Techs;
 
 namespace StellarisParser.Core
@@ -26,10 +30,14 @@ namespace StellarisParser.Core
             container.Register<IStellarisVisitor<Variables>, VariableVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<ModDescriptor>, DescriptorVisitor>(Lifestyle.Singleton);
             //container.Register<IStellarisVisitor<Component>, ComponentVisitor>(Lifestyle.Singleton);
+            container.Register<IStellarisVisitor<ComponentSets>, ComponentSetsVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<Thruster>, ThrusterVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<Reactor>, ReactorVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<FtlDrive>, FtlDriveVisitor>(Lifestyle.Singleton);
             container.Register<IStellarisVisitor<ComponentsList>, ComponentsListVisitor>(Lifestyle.Singleton);
+            
+            container.Register<ComponentSets>(Lifestyle.Singleton);
+            container.Register<ComponentSetsVisitor>(Lifestyle.Singleton);
             
             container.Register<AreaVisitor>(Lifestyle.Singleton);
             container.Register<TierVisitor>(Lifestyle.Singleton);

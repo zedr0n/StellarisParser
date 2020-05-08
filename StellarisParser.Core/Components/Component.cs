@@ -6,7 +6,8 @@ namespace StellarisParser.Core.Components
     public abstract class Component
     {
         public string Key { get; set; }
-        public abstract string Type { get; }
+        public string Type => ComponentType.ToString();
+        public abstract Specs.ComponentType ComponentType { get; }
         
         public List<Tech> Prerequisites { get; set; } = new List<Tech>();
         public double Power { get; set; }
