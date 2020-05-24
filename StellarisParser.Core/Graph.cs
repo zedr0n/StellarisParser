@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using QuickGraph;
 using QuickGraph.Serialization;
 using StellarisParser.Core.Components;
+using StellarisParser.Core.Components.Shields;
 using StellarisParser.Core.Components.Thrusters;
 using StellarisParser.Core.Techs;
 
@@ -69,6 +70,18 @@ namespace StellarisParser.Core
             
             [XmlAttribute("Evasion")]
             public double Evasion { get; set; }
+            
+            // Shield
+            [XmlAttribute("ShieldAdd")]
+            public double ShieldAdd { get; set; }
+
+            [XmlAttribute("ShieldRegen")]
+            public double ShieldRegen { get; set; }
+
+            [XmlAttribute("ShieldBoost")]
+            public double ShieldBoost { get; set; }
+
+            
         }
 
         private string GetSource(string source)
@@ -102,6 +115,7 @@ namespace StellarisParser.Core
             var tech = component.Prerequisites.FirstOrDefault();
 
             var thruster = component as Thruster;
+            var shield = component as Shield;
             var vertex = new Vertex
             {
                 Id = component.Key,
@@ -116,7 +130,10 @@ namespace StellarisParser.Core
                 SourcePath = component.Source.Replace("\\\\", "\\"),
                 Label = component.Key,
                 Speed = thruster?.SpeedMultiplier ?? 0,
-                Evasion = thruster?.Evasion ?? 0
+                Evasion = thruster?.Evasion ?? 0,
+                ShieldRegen = shield?.ShieldRegen ?? 0,
+                ShieldAdd = shield?.ShieldAdd ?? 0,
+                ShieldBoost = shield?.ShieldMultiplier ?? 0
             };
             _graph.AddVertex(vertex);
             return true;

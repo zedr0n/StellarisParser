@@ -200,7 +200,8 @@ namespace StellarisParser.Console
 
             _parser = container.GetInstance<Parser>();
             _mods = container.GetInstance<Mods>();
-            _parser.ReadVars(BASE_VARS);
+            //_parser.ReadVars(BASE_VARS);
+            ReadVars(BASE_VARS_DIR);
 
             System.Console.WriteLine("Reading base techs...");
             ReadAllTechs(TECH_PATH);

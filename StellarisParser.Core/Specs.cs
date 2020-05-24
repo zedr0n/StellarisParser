@@ -46,9 +46,11 @@ namespace StellarisParser.Core
         public const string COMBAT_COMPUTER_SET = "combat_computers";
         public const string ARMOR_SET = "armor";
         public const string SHIELD_SET = "shield";
+        public const string LIGHT_WALL_SET = "light_wall";
         
         public const string BASE_PATH = "f:\\steam\\steamapps\\common\\Stellaris";
         public const string BASE_VARS = BASE_PATH + "\\common\\scripted_variables\\00_scripted_variables.txt";
+        public const string BASE_VARS_DIR = BASE_PATH + "\\common\\scripted_variables";
         public const string TECH_PATH = BASE_PATH + "\\common\\technology";
         public const string COMPONENT_PATH = BASE_PATH + "\\common\\component_templates";
         public const string COMPONENT_SETS_POSTFIX = "\\common\\component_sets";

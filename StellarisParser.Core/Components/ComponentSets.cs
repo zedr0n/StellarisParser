@@ -16,6 +16,7 @@ namespace StellarisParser.Core.Components
             { SENSOR_SET, ComponentType.SENSOR},
             { COMBAT_COMPUTER_SET, ComponentType.COMBAT_COMPUTER},
             { ARMOR_SET, ComponentType.ARMOR },
+            { LIGHT_WALL_SET, ComponentType.SHIELD},
             { SHIELD_SET, ComponentType.SHIELD }
         };
 

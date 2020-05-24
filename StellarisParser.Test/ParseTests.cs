@@ -253,7 +253,7 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
 
             var techs = parser.ReadFile(Specs.TECH_PATH + "\\00_eng_tech.txt",Specs.BASE_VARS);
             
-            Assert.Equal(80, techs.Count);
+            Assert.Equal(82, techs.Count);
             var tech = techs["tech_destroyers"];
             Assert.Equal("tech_corvettes", tech.Prerequisites.Single().Name);
         }

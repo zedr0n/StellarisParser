@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using StellarisParser.Core.Modifiers;
 using StellarisParser.Core.Techs;
 
 namespace StellarisParser.Core.Components
@@ -10,6 +11,7 @@ namespace StellarisParser.Core.Components
         public abstract Specs.ComponentType ComponentType { get; }
         
         public List<Tech> Prerequisites { get; set; } = new List<Tech>();
+        public List<Modifier> Modifiers { get; set; }
         public double Power { get; set; }
         public string Source { get; set; }
         
