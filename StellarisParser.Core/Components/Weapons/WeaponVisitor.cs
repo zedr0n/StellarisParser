@@ -3,11 +3,6 @@ namespace StellarisParser.Core.Components.Weapons
     public class WeaponVisitor : ComponentVisitor<Weapon>
     {
         private readonly DamageVisitor _damageVisitor;
-        
-        public WeaponVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser, ComponentsList componentsList, ComponentSets componentSets, ModifiersVisitor modifiersVisitor, DamageVisitor damageVisitor) : base(keyVisitor, powerVisitor, prereqVisitor, componentSetVisitor, upgradesToVisitor, parser, componentsList, componentSets, modifiersVisitor)
-        {
-            _damageVisitor = damageVisitor;
-        }
 
         public override Weapon VisitKeyval(stellarisParser.KeyvalContext context)
         {
@@ -20,6 +15,11 @@ namespace StellarisParser.Core.Components.Weapons
             weapon.MaxDamage = damage?.Max ?? double.NaN;
 
             return weapon;
+        }
+
+        public WeaponVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser, ComponentsList componentsList, ComponentSets componentSets, ModifiersVisitor modifiersVisitor, SizeVisitor sizeVisitor, DamageVisitor damageVisitor) : base(keyVisitor, powerVisitor, prereqVisitor, componentSetVisitor, upgradesToVisitor, parser, componentsList, componentSets, modifiersVisitor, sizeVisitor)
+        {
+            _damageVisitor = damageVisitor;
         }
     }
 }

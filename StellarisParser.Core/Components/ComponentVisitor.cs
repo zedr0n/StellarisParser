@@ -23,13 +23,14 @@ namespace StellarisParser.Core.Components
         private readonly ComponentSetVisitor _componentSetVisitor;
         private readonly UpgradesToVisitor _upgradesToVisitor;
         private readonly ModifiersVisitor _modifiersVisitor;
+        private readonly SizeVisitor _sizeVisitor;
         
         private readonly Parser _parser;
         protected Specs.ComponentType ComponentType => new T().ComponentType;
 
         public ComponentVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor,
             ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser,
-            ComponentsList componentsList, ComponentSets componentSets, ModifiersVisitor modifiersVisitor)
+            ComponentsList componentsList, ComponentSets componentSets, ModifiersVisitor modifiersVisitor, SizeVisitor sizeVisitor)
         {
             _keyVisitor = keyVisitor;
             _powerVisitor = powerVisitor;
@@ -38,6 +39,7 @@ namespace StellarisParser.Core.Components
             _componentsList = componentsList;
             _componentSets = componentSets;
             _modifiersVisitor = modifiersVisitor;
+            _sizeVisitor = sizeVisitor;
             _upgradesToVisitor = upgradesToVisitor;
             _componentSetVisitor = componentSetVisitor;
         }
@@ -53,6 +55,10 @@ namespace StellarisParser.Core.Components
             var componentType = _componentSets[componentsSet];
             if (componentType == Specs.ComponentType.UNKNOWN && ( context.GetText().StartsWith(Specs.WEAPON_TEMPLATE) || context.GetText().StartsWith(Specs.STRIKE_CRAFT_TEMPLATE)))
                 componentType = Specs.ComponentType.WEAPON;
+
+            var size = _sizeVisitor.Visit(context.val())?.Replace('"'.ToString(), "");
+            if (componentType == Specs.ComponentType.UNKNOWN && size == "aux")
+                componentType = Specs.ComponentType.AUXILARY;
             
             if (componentType != ComponentType)
                 return null;

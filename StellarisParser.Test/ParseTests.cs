@@ -351,7 +351,8 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_roles.txt");
 
             var components = container.GetInstance<ComponentsList>();
-            Assert.Equal(40, components.Count);
+            Assert.Equal(40, components.ToList().OfType<CombatComputer>().Count());
+            //Assert.Equal(40, components.Count);
             Assert.Equal( 0.2, components.ToList().OfType<CombatComputer>().Max(s => s.WeaponRange));
         }
 
@@ -363,11 +364,14 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             parser.ReadVars(Specs.BASE_PATH + "\\common\\scripted_variables\\02_scripted_variables_component_cost.txt");
             parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
             parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_utilities.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_leviathans_utilities.txt");
+            parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities.txt");
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities.txt");
 
             var components = container.GetInstance<ComponentsList>();
-            Assert.Equal(21, components.Count);
-            Assert.Equal( 870, components.ToList().OfType<Armor>().Max(s => s.ArmorAdd));
+            Assert.Equal(components.Count, components.ToList().OfType<Armor>().Count());
+            Assert.Equal(27, components.ToList().OfType<Armor>().Count());
+            Assert.Equal( 1110, components.ToList().OfType<Armor>().Max(s => s.ArmorAdd));
             Assert.Equal( 1110, components.ToList().OfType<Armor>().Max(s => s.HullAdd));
         }
 
@@ -379,10 +383,12 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             parser.ReadVars(Specs.BASE_PATH + "\\common\\scripted_variables\\02_scripted_variables_component_cost.txt");
             parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
             parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_utilities_shields.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_fallen_empire_utilities.txt");
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_shields.txt");
 
             var components = container.GetInstance<ComponentsList>();
-            Assert.Equal(18, components.Count);
+            Assert.Equal(components.Count, components.ToList().OfType<Shield>().Count());
+            Assert.Equal(24, components.Count);
             Assert.Equal( 1440, components.ToList().OfType<Shield>().Max(s => s.ShieldAdd));
             Assert.Equal( 12.5, components.ToList().OfType<Shield>().Max(s => s.ShieldRegen));
         }
@@ -398,7 +404,8 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_aux.txt");
 
             var components = container.GetInstance<ComponentsList>();
-            Assert.Equal(1, components.Count);
+            Assert.Equal(6, components.Count);
+            Assert.Single(components.ToList().OfType<Shield>());
             Assert.Equal( 0.1, components.ToList().OfType<Shield>().Max(s => s.ShieldMultiplier));
         }
 
@@ -413,7 +420,8 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_weapons_energy.txt");
 
             var components = container.GetInstance<ComponentsList>();
-            Assert.Equal(34, components.Count);
+            Assert.Equal(38, components.Count);
+            Assert.Equal(components.Count, components.ToList().OfType<Weapon>().Count());
         }
 
         

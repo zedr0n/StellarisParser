@@ -6,6 +6,7 @@ using SimpleInjector;
 using StellarisParser.Core.Components;
 using StellarisParser.Core.Components.Afterburners;
 using StellarisParser.Core.Components.Armors;
+using StellarisParser.Core.Components.Auxilaries;
 using StellarisParser.Core.Components.CombatComputers;
 using StellarisParser.Core.Components.Drives;
 using StellarisParser.Core.Components.Reactors;
@@ -82,6 +83,7 @@ namespace StellarisParser.Core
             container.Register<PowerVisitor>(Lifestyle.Singleton);
             container.Register<UpgradesToVisitor>(Lifestyle.Singleton);
             container.Register<ComponentSetVisitor>(Lifestyle.Singleton);
+            container.Register<SizeVisitor>(Lifestyle.Singleton);
             
             // components
             container.Register<ThrusterVisitor>(Lifestyle.Singleton);
@@ -99,9 +101,13 @@ namespace StellarisParser.Core
             container.Register<CombatComputerVisitor>(Lifestyle.Singleton);
             container.Register<ArmorVisitor>(Lifestyle.Singleton);
             container.Register<ShieldVisitor>(Lifestyle.Singleton);
+            
+            container.Register<AuxilaryVisitor>(Lifestyle.Singleton);
 
             container.Register<DamageVisitor>(Lifestyle.Singleton);
             container.Register<WeaponVisitor>(Lifestyle.Singleton);
+            
+            container.Register<UnknownVisitor>(Lifestyle.Singleton);
             
             // techs
             
@@ -126,7 +132,9 @@ namespace StellarisParser.Core
                 typeof(CombatComputerVisitor),
                 typeof(ArmorVisitor),
                 typeof(ShieldVisitor),
-                typeof(WeaponVisitor)
+                typeof(WeaponVisitor),
+                typeof(AuxilaryVisitor),
+                typeof(UnknownVisitor)
             });
         }
     }

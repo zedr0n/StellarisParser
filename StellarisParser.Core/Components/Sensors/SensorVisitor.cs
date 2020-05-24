@@ -5,11 +5,6 @@ namespace StellarisParser.Core.Components.Sensors
         private readonly SensorRangeVisitor _sensorRangeVisitor;
         private readonly HyperlaneRangeVisitor _hyperlaneRangeVisitor;
         
-        public SensorVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser, ComponentsList componentsList, ComponentSets componentSets, ModifiersVisitor modifiersVisitor, SensorRangeVisitor sensorRangeVisitor, HyperlaneRangeVisitor hyperlaneRangeVisitor) : base(keyVisitor, powerVisitor, prereqVisitor, componentSetVisitor, upgradesToVisitor, parser, componentsList, componentSets, modifiersVisitor)
-        {
-            _sensorRangeVisitor = sensorRangeVisitor;
-            _hyperlaneRangeVisitor = hyperlaneRangeVisitor;
-        }
 
         public override Sensor VisitKeyval(stellarisParser.KeyvalContext context)
         {
@@ -26,5 +21,10 @@ namespace StellarisParser.Core.Components.Sensors
             return sensor;
         }
 
+        public SensorVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor, ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser, ComponentsList componentsList, ComponentSets componentSets, ModifiersVisitor modifiersVisitor, SizeVisitor sizeVisitor, SensorRangeVisitor sensorRangeVisitor, HyperlaneRangeVisitor hyperlaneRangeVisitor) : base(keyVisitor, powerVisitor, prereqVisitor, componentSetVisitor, upgradesToVisitor, parser, componentsList, componentSets, modifiersVisitor, sizeVisitor)
+        {
+            _sensorRangeVisitor = sensorRangeVisitor;
+            _hyperlaneRangeVisitor = hyperlaneRangeVisitor;
+        }
     }
 }

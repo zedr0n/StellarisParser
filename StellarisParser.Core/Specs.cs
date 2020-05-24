@@ -38,6 +38,7 @@ namespace StellarisParser.Core
         public const string SHIELD_MULT_ID = "ship_shield_mult";
         
         public const string SET_ID = "component_set";
+        public const string SIZE_ID = "size";
 
         public const string THRUSTER_SET = "thruster_components";
         public const string REACTOR_SET = "power_core";
@@ -46,7 +47,11 @@ namespace StellarisParser.Core
         public const string SENSOR_SET = "sensor_components";
         public const string COMBAT_COMPUTER_SET = "combat_computers";
         public const string ARMOR_SET = "armor";
+        
         public const string SHIELD_SET = "shield";
+        public const string DEFLECTOR_SET = "deflector";
+        public const string BARRIER_SET = "barrier";
+        
         public const string LIGHT_WALL_SET = "light_wall";
         public const string LASER_SET = "laser";
         public const string ENERGY_LANCE_SET = "energy_lance";

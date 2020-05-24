@@ -4,7 +4,8 @@ using static StellarisParser.Core.Specs;
 
 namespace StellarisParser.Core.Components
 {
-    public class ComponentSets
+    public class 
+        ComponentSets
     {
         private readonly Dictionary<string, ComponentType> _componentTypes  = new Dictionary<string, ComponentType>();
         private readonly Dictionary<string, ComponentType> _guesses = new Dictionary<string, ComponentType>
@@ -17,7 +18,9 @@ namespace StellarisParser.Core.Components
             { COMBAT_COMPUTER_SET, ComponentType.COMBAT_COMPUTER},
             { ARMOR_SET, ComponentType.ARMOR },
             { LIGHT_WALL_SET, ComponentType.SHIELD},
-            { SHIELD_SET, ComponentType.SHIELD }
+            { SHIELD_SET, ComponentType.SHIELD },
+            { DEFLECTOR_SET, ComponentType.SHIELD },
+            { BARRIER_SET, ComponentType.SHIELD }
         };
 
         public void Aggregate(ComponentSets other)
@@ -29,7 +32,7 @@ namespace StellarisParser.Core.Components
             }
         }
         
-        public ComponentType this[string id] => id == null ? ComponentType.UNKNOWN : _componentTypes.ContainsKey(id) ? _componentTypes[id] : ComponentType.AUXILARY;
+        public ComponentType this[string id] => id == null ? ComponentType.UNKNOWN : _componentTypes.ContainsKey(id) ? _componentTypes[id] : ComponentType.UNKNOWN;
         
         public void Add(string componentSet, ComponentType type = ComponentType.UNKNOWN)
         {
