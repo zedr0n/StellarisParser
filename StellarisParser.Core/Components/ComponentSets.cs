@@ -17,12 +17,7 @@ namespace StellarisParser.Core.Components
             { COMBAT_COMPUTER_SET, ComponentType.COMBAT_COMPUTER},
             { ARMOR_SET, ComponentType.ARMOR },
             { LIGHT_WALL_SET, ComponentType.SHIELD},
-            { SHIELD_SET, ComponentType.SHIELD },
-            { LASER_SET, ComponentType.WEAPON},
-            { ARC_EMITTER_SET, ComponentType.WEAPON},
-            { ENERGY_LANCE_SET, ComponentType.WEAPON},
-            { DISRUPTOR_SET, ComponentType.WEAPON},
-            { STRIKE_CRAFT_SET, ComponentType.WEAPON}
+            { SHIELD_SET, ComponentType.SHIELD }
         };
 
         public void Aggregate(ComponentSets other)
@@ -41,7 +36,7 @@ namespace StellarisParser.Core.Components
             if (type == ComponentType.UNKNOWN)
             {
                 if (!GuessComponentType(componentSet))
-                    _componentTypes[componentSet] = ComponentType.AUXILARY;
+                    _componentTypes[componentSet] = ComponentType.UNKNOWN;
             }
             else
                 _componentTypes[componentSet] = type;

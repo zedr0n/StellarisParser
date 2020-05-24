@@ -51,6 +51,8 @@ namespace StellarisParser.Core.Components
             }
 
             var componentType = _componentSets[componentsSet];
+            if (componentType == Specs.ComponentType.UNKNOWN && ( context.GetText().StartsWith(Specs.WEAPON_TEMPLATE) || context.GetText().StartsWith(Specs.STRIKE_CRAFT_TEMPLATE)))
+                componentType = Specs.ComponentType.WEAPON;
             
             if (componentType != ComponentType)
                 return null;

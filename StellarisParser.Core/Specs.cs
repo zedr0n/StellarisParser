@@ -54,6 +54,8 @@ namespace StellarisParser.Core
         public const string ARC_EMITTER_SET = "arc_emitter";
         public const string DISRUPTOR_SET = "disruptor";
         public const string STRIKE_CRAFT_SET = "strike_craft";
+        public const string WEAPON_TEMPLATE = "weapon_component_template";
+        public const string STRIKE_CRAFT_TEMPLATE = "strike_craft_component_template";
         
         public const string BASE_PATH = "f:\\steam\\steamapps\\common\\Stellaris";
         public const string BASE_VARS = BASE_PATH + "\\common\\scripted_variables\\00_scripted_variables.txt";
@@ -62,6 +64,7 @@ namespace StellarisParser.Core
         public const string COMPONENT_PATH = BASE_PATH + "\\common\\component_templates";
         public const string COMPONENT_SETS_POSTFIX = "\\common\\component_sets";
         public const string COMPONENT_SETS_PATH = BASE_PATH + COMPONENT_SETS_POSTFIX;
+        
 
         public const string NHSC_PATH = "F:\\steam\\steamapps\\workshop\\content\\281990\\1885775216";
 

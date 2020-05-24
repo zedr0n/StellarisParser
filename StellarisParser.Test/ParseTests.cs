@@ -413,7 +413,7 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_weapons_energy.txt");
 
             var components = container.GetInstance<ComponentsList>();
-            Assert.Equal(21, components.Count);
+            Assert.Equal(34, components.Count);
         }
 
         
@@ -428,7 +428,7 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_weapons_distant_stars.txt");
 
             var components = container.GetInstance<ComponentsList>();
-            Assert.Equal(1, components.Count);
+            Assert.Equal(9, components.Count);
             Assert.Equal(12, components.ToList().OfType<Weapon>().Max(s => s.MaxDamage));
         }
 
