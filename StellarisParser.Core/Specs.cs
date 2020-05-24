@@ -61,7 +61,9 @@ namespace StellarisParser.Core
         public const string STRIKE_CRAFT_SET = "strike_craft";
         public const string WEAPON_TEMPLATE = "weapon_component_template";
         public const string STRIKE_CRAFT_TEMPLATE = "strike_craft_component_template";
-        
+
+        public const string AURA_SET = "aura";
+
         public const string BASE_PATH = "f:\\steam\\steamapps\\common\\Stellaris";
         public const string BASE_VARS = BASE_PATH + "\\common\\scripted_variables\\00_scripted_variables.txt";
         public const string BASE_VARS_DIR = BASE_PATH + "\\common\\scripted_variables";
@@ -85,6 +87,7 @@ namespace StellarisParser.Core
             SHIELD,
             AUXILARY,
             WEAPON,
+            AURA,
             UNKNOWN
         }
     }

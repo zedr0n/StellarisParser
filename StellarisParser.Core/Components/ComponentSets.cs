@@ -20,7 +20,8 @@ namespace StellarisParser.Core.Components
             { LIGHT_WALL_SET, ComponentType.SHIELD},
             { SHIELD_SET, ComponentType.SHIELD },
             { DEFLECTOR_SET, ComponentType.SHIELD },
-            { BARRIER_SET, ComponentType.SHIELD }
+            { BARRIER_SET, ComponentType.SHIELD },
+            { AURA_SET, ComponentType.AURA }
         };
 
         public void Aggregate(ComponentSets other)

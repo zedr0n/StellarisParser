@@ -6,6 +6,7 @@ using SimpleInjector;
 using StellarisParser.Core.Components;
 using StellarisParser.Core.Components.Afterburners;
 using StellarisParser.Core.Components.Armors;
+using StellarisParser.Core.Components.Auras;
 using StellarisParser.Core.Components.Auxilaries;
 using StellarisParser.Core.Components.CombatComputers;
 using StellarisParser.Core.Components.Drives;
@@ -107,6 +108,8 @@ namespace StellarisParser.Core
             container.Register<DamageVisitor>(Lifestyle.Singleton);
             container.Register<WeaponVisitor>(Lifestyle.Singleton);
             
+            container.Register<AuraVisitor>(Lifestyle.Singleton);
+            
             container.Register<UnknownVisitor>(Lifestyle.Singleton);
             
             // techs
@@ -134,7 +137,8 @@ namespace StellarisParser.Core
                 typeof(ShieldVisitor),
                 typeof(WeaponVisitor),
                 typeof(AuxilaryVisitor),
-                typeof(UnknownVisitor)
+                typeof(UnknownVisitor),
+                typeof(AuraVisitor)
             });
         }
     }
