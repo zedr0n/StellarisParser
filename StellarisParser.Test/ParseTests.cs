@@ -11,6 +11,7 @@ using StellarisParser.Core.Components.Reactors;
 using StellarisParser.Core.Components.Sensors;
 using StellarisParser.Core.Components.Shields;
 using StellarisParser.Core.Components.Thrusters;
+using StellarisParser.Core.Components.Weapons;
 using StellarisParser.Core.Techs;
 using Xunit;
 using Component = StellarisParser.Core.Components.Component;
@@ -399,6 +400,36 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             var components = container.GetInstance<ComponentsList>();
             Assert.Equal(1, components.Count);
             Assert.Equal( 0.1, components.ToList().OfType<Shield>().Max(s => s.ShieldMultiplier));
+        }
+
+        [Fact]
+        public void CanParseEnergyWeapons()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+            parser.ReadVars(Specs.BASE_PATH + "\\common\\scripted_variables\\02_scripted_variables_component_cost.txt");
+            parser.ReadTechs(Specs.TECH_PATH + "\\00_phys_tech.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_weapons_energy.txt");
+            parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_weapons_energy.txt");
+
+            var components = container.GetInstance<ComponentsList>();
+            Assert.Equal(21, components.Count);
+        }
+
+        
+        [Fact]
+        public void CanParseDamage()
+        {
+            var container = CreateContainer();
+            var parser = container.GetInstance<Parser>();
+            parser.ReadVars(Specs.BASE_PATH + "\\common\\scripted_variables\\02_scripted_variables_component_cost.txt");
+            parser.ReadTechs(Specs.TECH_PATH + "\\00_phys_tech.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_strike_craft.txt");
+            parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_weapons_distant_stars.txt");
+
+            var components = container.GetInstance<ComponentsList>();
+            Assert.Equal(1, components.Count);
+            Assert.Equal(12, components.ToList().OfType<Weapon>().Max(s => s.MaxDamage));
         }
 
     }

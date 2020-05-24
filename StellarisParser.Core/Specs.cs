@@ -12,6 +12,7 @@ namespace StellarisParser.Core
         public const string KEY_ID = "key";
         public const string POWER_ID = "power";
         public const string UPGRADES_TO_ID = "upgrades_to";
+        public const string DAMAGE_ID = "damage";
 
         public const string SENSOR_RANGE_ID = "sensor_range";
         public const string HYPERLANE_RANGE_ID = "hyperlane_range";
@@ -47,6 +48,12 @@ namespace StellarisParser.Core
         public const string ARMOR_SET = "armor";
         public const string SHIELD_SET = "shield";
         public const string LIGHT_WALL_SET = "light_wall";
+        public const string LASER_SET = "laser";
+        public const string ENERGY_LANCE_SET = "energy_lance";
+        public const string PLASMA_SET = "plasma";
+        public const string ARC_EMITTER_SET = "arc_emitter";
+        public const string DISRUPTOR_SET = "disruptor";
+        public const string STRIKE_CRAFT_SET = "strike_craft";
         
         public const string BASE_PATH = "f:\\steam\\steamapps\\common\\Stellaris";
         public const string BASE_VARS = BASE_PATH + "\\common\\scripted_variables\\00_scripted_variables.txt";
@@ -69,6 +76,7 @@ namespace StellarisParser.Core
             ARMOR,
             SHIELD,
             AUXILARY,
+            WEAPON,
             UNKNOWN
         }
     }

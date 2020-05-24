@@ -12,6 +12,7 @@ using StellarisParser.Core.Components.Reactors;
 using StellarisParser.Core.Components.Sensors;
 using StellarisParser.Core.Components.Shields;
 using StellarisParser.Core.Components.Thrusters;
+using StellarisParser.Core.Components.Weapons;
 using StellarisParser.Core.Modifiers;
 using StellarisParser.Core.Techs;
 using Armor = StellarisParser.Core.Modifiers.Armor;
@@ -98,6 +99,9 @@ namespace StellarisParser.Core
             container.Register<CombatComputerVisitor>(Lifestyle.Singleton);
             container.Register<ArmorVisitor>(Lifestyle.Singleton);
             container.Register<ShieldVisitor>(Lifestyle.Singleton);
+
+            container.Register<DamageVisitor>(Lifestyle.Singleton);
+            container.Register<WeaponVisitor>(Lifestyle.Singleton);
             
             // techs
             
@@ -121,7 +125,8 @@ namespace StellarisParser.Core
                 typeof(SensorVisitor),
                 typeof(CombatComputerVisitor),
                 typeof(ArmorVisitor),
-                typeof(ShieldVisitor)
+                typeof(ShieldVisitor),
+                typeof(WeaponVisitor)
             });
         }
     }
