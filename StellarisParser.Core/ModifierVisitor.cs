@@ -2,9 +2,9 @@ using StellarisParser.Core.Modifiers;
 
 namespace StellarisParser.Core
 {
-    public abstract class SingleModifierVisitor : SpecVisitorDouble
+    public abstract class ModifierVisitor : SpecVisitorDouble
     {
-        public SingleModifierVisitor(Variables variables) : base(variables)
+        public ModifierVisitor(Variables variables) : base(variables)
         {
         }
 
@@ -12,12 +12,12 @@ namespace StellarisParser.Core
         public abstract Modifier Modifier { get; }
     }
     
-    public class SingleModifierVisitor<T> : SingleModifierVisitor
+    public class ModifierVisitor<T> : ModifierVisitor
         where T : Modifier, new()
     {
         private readonly T _modifier;
         
-        public SingleModifierVisitor(Variables variables) : base(variables)
+        public ModifierVisitor(Variables variables) : base(variables)
         {
             _modifier = new T();
         }

@@ -36,25 +36,25 @@ namespace StellarisParser.Core
     {
         private void RegisterModifiers(Container container)
         {
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<ShipEvasionMultiplier>>(Lifestyle.Singleton);
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<SpeedMultiplier>>(Lifestyle.Singleton);
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<Accuracy>>(Lifestyle.Singleton);
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<EngagementRangeMultiplier>>(Lifestyle.Singleton);
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<FireRateMultiplier>>(Lifestyle.Singleton);
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<Tracking>>(Lifestyle.Singleton);
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<WeaponRangeMultiplier>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<ShipEvasionMultiplier>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<SpeedMultiplier>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<Accuracy>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<EngagementRangeMultiplier>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<FireRateMultiplier>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<Tracking>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<WeaponRangeMultiplier>>(Lifestyle.Singleton);
             
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<Armor>>(Lifestyle.Singleton);
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<Hull>>(Lifestyle.Singleton);
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<Shield>>(Lifestyle.Singleton);
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<ShieldRegen>>(Lifestyle.Singleton);
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<ShieldMultiplier>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<Armor>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<Hull>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<Shield>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<ShieldRegen>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<ShieldMultiplier>>(Lifestyle.Singleton);
 
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<ShipWindup>>(Lifestyle.Singleton);
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<JumpDriveRangeMultiplier>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<ShipWindup>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<JumpDriveRangeMultiplier>>(Lifestyle.Singleton);
             
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<ShipEvasion>>(Lifestyle.Singleton);
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<BaseSpeedMultiplier>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<ShipEvasion>>(Lifestyle.Singleton);
+            container.Collection.Append<ModifierVisitor, ModifierVisitor<BaseSpeedMultiplier>>(Lifestyle.Singleton);
 
             container.Register<ModifiersVisitor>(Lifestyle.Singleton);
         }

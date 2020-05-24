@@ -6,9 +6,9 @@ namespace StellarisParser.Core.Components
 {
     public class ModifiersVisitor : StellarisVisitor<List<Modifier>>
     {
-        private readonly IEnumerable<SingleModifierVisitor> _singleModifierVisitors;
+        private readonly IEnumerable<ModifierVisitor> _singleModifierVisitors;
 
-        public ModifiersVisitor(IEnumerable<SingleModifierVisitor> singleModifierVisitors)
+        public ModifiersVisitor(IEnumerable<ModifierVisitor> singleModifierVisitors)
         {
             _singleModifierVisitors = singleModifierVisitors;
         }

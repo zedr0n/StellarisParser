@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Antlr4.Runtime.Tree;
 using StellarisParser.Core.Techs;
 
@@ -11,7 +9,7 @@ namespace StellarisParser.Core.Components
         public Component Visit(IParseTree tree);
     }
     
-    public abstract class ComponentVisitor<T> : StellarisVisitor<T>, IComponentVisitor, IStellarisVisitor<T>
+    public abstract class ComponentVisitor<T> : StellarisVisitor<T>, IComponentVisitor
         where T : Component, new()
     {
         private readonly ComponentsList _componentsList;
