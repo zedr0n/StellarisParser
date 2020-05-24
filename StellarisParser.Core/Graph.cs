@@ -14,13 +14,14 @@ namespace StellarisParser.Core
     public class Graph
     {
         private readonly TechsList _techsList;
-        private readonly Components.ComponentsList _componentsList;
+        
+        private readonly ComponentsList _componentsList;
         private readonly Mods _mods;
 
         private readonly BidirectionalGraph<Vertex, SEdge<Vertex>> _graph
             = new BidirectionalGraph<Vertex, SEdge<Vertex>>();
 
-        public Graph(TechsList techsList, Mods mods, Components.ComponentsList componentsList)
+        public Graph(TechsList techsList, Mods mods, ComponentsList componentsList)
         {
             _techsList = techsList;
             _mods = mods;

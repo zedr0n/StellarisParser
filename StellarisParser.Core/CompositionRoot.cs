@@ -50,9 +50,6 @@ namespace StellarisParser.Core
             container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<ShipWindup>>(Lifestyle.Singleton);
             container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<JumpDriveRangeMultiplier>>(Lifestyle.Singleton);
             
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<SensorRange>>(Lifestyle.Singleton);
-            container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<HyperlaneRange>>(Lifestyle.Singleton);
-            
             container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<ShipEvasion>>(Lifestyle.Singleton);
             container.Collection.Append<SingleModifierVisitor, SingleModifierVisitor<BaseSpeedMultiplier>>(Lifestyle.Singleton);
 
