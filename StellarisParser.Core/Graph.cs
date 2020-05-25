@@ -39,6 +39,9 @@ namespace StellarisParser.Core
             [XmlAttribute("Label")]
             public string Label { get; set; }
             
+            [XmlAttribute("Image")]
+            public string Image { get; set; }
+            
             [XmlAttribute("Description")]
             public string Description { get; set; }
 
@@ -167,6 +170,7 @@ namespace StellarisParser.Core
             {
                 Id = tech.Key,
                 Name = tech.Key,
+                Image = tech.Image,
                 Description = tech.Description,
                 Label = $"[{tech.Tier}]{GetTechName(tech)}",
                 Cost = tech.Cost,

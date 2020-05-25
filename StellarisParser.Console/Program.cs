@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.IO;
 using Newtonsoft.Json;
 using SimpleInjector;
 using StellarisParser.Core;
 using StellarisParser.Core.Components;
+using StellarisParser.Core.Icons;
 using StellarisParser.Core.Localisation;
 using StellarisParser.Core.Techs;
 using static StellarisParser.Core.Specs;
@@ -180,6 +182,26 @@ namespace StellarisParser.Console
             }
         }
 
+        private static void StoreIcons(TechsList techList, string path)
+        {
+            var storeIcons = true;
+            if (storeIcons)
+            {
+                var converter = new IconConverter();
+                foreach (var tech in techList.ToList())
+                {
+                    var file = path + "\\" + tech.Key + ".dds";
+                    if (!Directory.Exists("icons"))
+                        Directory.CreateDirectory("icons");
+                    if (File.Exists(file))
+                    {
+                        var bitmap = converter.ConvertIcon(file);
+                        bitmap.Save($".\\icons\\{tech.Key}.png", ImageFormat.Png);
+                        // bitmap.Save(Path.ChangeExtension(path, ".png"), ImageFormat.Png);
+                    }
+                }
+            }
+        }
 
         public static void ReadMod(string modDir)
         {
@@ -209,6 +231,8 @@ namespace StellarisParser.Console
                 var componentDir = modDir + "\\common\\component_templates";
                 if (Directory.Exists(componentDir))
                     ReadAllComponents(componentDir);
+                
+                
             }
         }
         
@@ -240,14 +264,22 @@ namespace StellarisParser.Console
             ReadAllComponents(COMPONENT_PATH);
 
             foreach (var d in args)
+            {
                 ReadMod(d);
-            
+                StoreIcons(container.GetInstance<TechsList>(),d + Specs.TECH_ICONS_POSTFIX);
+            }
+
+
             var graph = container.GetInstance<Graph>();
             graph.Populate();
             graph.Serialise("graph");
             
-            // store json
+            // store icons
+            var path = Specs.BASE_PATH + Specs.TECH_ICONS_POSTFIX;
             var techList = container.GetInstance<TechsList>();
+            StoreIcons(techList, path);
+            
+            // store json
             var techJson = JsonConvert.SerializeObject(techList.Map, Formatting.Indented);
             File.WriteAllText(@"techs.json", techJson);
 

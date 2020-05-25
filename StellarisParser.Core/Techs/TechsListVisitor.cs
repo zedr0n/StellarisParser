@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using Antlr4.Runtime.Tree;
 
 namespace StellarisParser.Core.Techs
@@ -57,6 +58,7 @@ namespace StellarisParser.Core.Techs
                 Key = id,
                 Area = area,
                 Tier = tier,
+                Image = id + ".png",
                 Cost = (int) cost,
                 Prerequisites = prereqs?.ToList() ?? new List<Tech>(),
                 Source = source,

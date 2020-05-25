@@ -66,7 +66,7 @@ namespace StellarisParser.Core
         public const string COMPONENT_PATH = BASE_PATH + "\\common\\component_templates";
         public const string COMPONENT_SETS_POSTFIX = "\\common\\component_sets";
         public const string COMPONENT_SETS_PATH = BASE_PATH + COMPONENT_SETS_POSTFIX;
-        
+        public const string TECH_ICONS_POSTFIX = @"\\gfx\\interface\\icons\\technologies";
 
         public const string NHSC_PATH = "F:\\steam\\steamapps\\workshop\\content\\281990\\1885775216";
 
