@@ -37,21 +37,15 @@ namespace StellarisParser.Console
             if (File.Exists(file))
             {
                 var read = Read.Add(file);
-                try
-                {
-                    if(!read)
-                        System.Console.Write("Reading " + file + "...");
+
+                if(!read)
+                    System.Console.Write("Reading " + file + "...");
                     
-                    _parser.ReadTechs(file);
-                    if(!read)
-                        System.Console.WriteLine(" OK!");
-                    
-                }
-                catch (Exception )
-                {
-                    if (!read)
-                        System.Console.WriteLine(" Error!");
-                }
+                var isError = !_parser.ReadTechs(file);
+                if(!read && !isError)
+                    System.Console.WriteLine(" OK!");
+                else if(!read)
+                    System.Console.WriteLine(" Error!");
             }
             else 
                 System.Console.WriteLine(file + " not found!");
@@ -69,21 +63,15 @@ namespace StellarisParser.Console
             {
                 var read = Read.Add(file);
 
-                try
-                {
-                    if (!read)
-                        System.Console.Write("Reading " + file + "...");
+                if (!read)
+                    System.Console.Write("Reading " + file + "...");
 
-                    _parser.ReadComponents(file);
-                    if (!read)
-                        System.Console.WriteLine(" OK!");
+                var isError = !_parser.ReadComponents(file); 
+                if (!read && !isError)
+                    System.Console.WriteLine(" OK!");
+                else if(!read)
+                    System.Console.WriteLine(" Error!");
 
-                }
-                catch (Exception)
-                {
-                    if (!read)
-                        System.Console.WriteLine(" Error!");
-                }
             }
             else
                 System.Console.WriteLine(file + " not found!");
@@ -99,19 +87,11 @@ namespace StellarisParser.Console
 
                 if (File.Exists(file))
                 {
-
-                    try
-                    {
-                        System.Console.Write("Reading " + file + "...");
-
-                        _parser.ReadComponentSets(file);
+                    System.Console.Write("Reading " + file + "...");
+                    if(_parser.ReadComponentSets(file))
                         System.Console.WriteLine(" OK!");
-
-                    }
-                    catch (Exception)
-                    {
+                    else
                         System.Console.WriteLine(" Error!");
-                    }
                 }
                 else
                     System.Console.WriteLine(file + " not found!");
@@ -151,16 +131,10 @@ namespace StellarisParser.Console
             foreach (var file in Directory.GetFiles(directory))
             {
                 System.Console.Write("Reading " + file + "...");
-                try
-                {
-                    _parser.ReadVars(file);
-                    //_vars.Aggregate(_parser.RunVisitor<Variables>(File.ReadAllText(file)));
+                if (_parser.ReadVars(file))
                     System.Console.WriteLine(" OK!");
-                }
-                catch (Exception )
-                {
+                else
                     System.Console.WriteLine(" Error!");
-                }
             }
         }
         
@@ -169,16 +143,10 @@ namespace StellarisParser.Console
             foreach (var file in Directory.GetFiles(directory))
             {
                 System.Console.Write("Reading " + file + "...");
-                try
-                {
-                    _parser.ReadLocalisation(file);
-                    //_vars.Aggregate(_parser.RunVisitor<Variables>(File.ReadAllText(file)));
+                if(_parser.ReadLocalisation(file))
                     System.Console.WriteLine(" OK!");
-                }
-                catch (Exception )
-                {
+                else
                     System.Console.WriteLine(" Error!");
-                }
             }
         }
 

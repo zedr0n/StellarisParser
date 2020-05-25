@@ -175,11 +175,10 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
 
 
             const string varsDir = Specs.NHSC_PATH + "\\common\\scripted_variables";
-            foreach(var f in Directory.GetFiles(varsDir))
-                parser.ReadVars(f);
+            parser.ReadVars(varsDir);
+
             const string techDir = Specs.NHSC_PATH + "\\common\\technology";
-            foreach (var f in Directory.GetFiles(techDir))
-                parser.ReadTechs(f);
+            parser.ReadTechs(techDir);
 
             var techs = container.GetInstance<TechsList>();
 
@@ -188,6 +187,7 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             tech.Disable = true;
             
             var str = parser.ApplyModifications(File.ReadAllText(tech.Source));
+            Assert.Contains("dummy", str);
         }
 
         [Fact]
@@ -252,7 +252,10 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
 
-            var techs = parser.ReadFile(Specs.TECH_PATH + "\\00_eng_tech.txt",Specs.BASE_VARS);
+            parser.ReadVars(Specs.BASE_VARS_DIR);
+            parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            var techs = container.GetInstance<TechsList>();
             
             Assert.Equal(82, techs.Count);
             var tech = techs["tech_destroyers"];
@@ -265,7 +268,10 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
 
-            var techs = parser.ReadFile(Specs.TECH_PATH + "\\00_eng_tech.txt",Specs.BASE_VARS);
+            parser.ReadVars(Specs.BASE_VARS_DIR);
+            parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
+            
             var graph = container.GetInstance<Graph>();
             graph.Populate();
             graph.Serialise(nameof(CanSerialiseGraph));
@@ -361,11 +367,9 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
         {
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
-            parser.ReadVars(Specs.BASE_PATH + "\\common\\scripted_variables\\02_scripted_variables_component_cost.txt");
+            parser.ReadVars(Specs.BASE_VARS_DIR);
             parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
-            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_utilities.txt");
-            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_leviathans_utilities.txt");
-            parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX);
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities.txt");
 
             var components = container.GetInstance<ComponentsList>();
@@ -380,10 +384,9 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
         {
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
-            parser.ReadVars(Specs.BASE_PATH + "\\common\\scripted_variables\\02_scripted_variables_component_cost.txt");
+            parser.ReadVars(Specs.BASE_VARS_DIR);
             parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
-            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_utilities_shields.txt");
-            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_fallen_empire_utilities.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX);
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_shields.txt");
 
             var components = container.GetInstance<ComponentsList>();
@@ -398,9 +401,9 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
         {
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
-            parser.ReadVars(Specs.BASE_PATH + "\\common\\scripted_variables\\02_scripted_variables_component_cost.txt");
+            parser.ReadVars(Specs.BASE_VARS_DIR);
             parser.ReadTechs(Specs.TECH_PATH + "\\00_eng_tech.txt");
-            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_utilities_shields.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX);
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_utilities_aux.txt");
 
             var components = container.GetInstance<ComponentsList>();
@@ -414,9 +417,9 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
         {
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
-            parser.ReadVars(Specs.BASE_PATH + "\\common\\scripted_variables\\02_scripted_variables_component_cost.txt");
+            parser.ReadVars(Specs.BASE_VARS_DIR);
             parser.ReadTechs(Specs.TECH_PATH + "\\00_phys_tech.txt");
-            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_weapons_energy.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX);
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_weapons_energy.txt");
 
             var components = container.GetInstance<ComponentsList>();
@@ -430,9 +433,9 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
         {
             var container = CreateContainer();
             var parser = container.GetInstance<Parser>();
-            parser.ReadVars(Specs.BASE_PATH + "\\common\\scripted_variables\\02_scripted_variables_component_cost.txt");
+            parser.ReadVars(Specs.BASE_VARS_DIR);
             parser.ReadTechs(Specs.TECH_PATH + "\\00_phys_tech.txt");
-            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX + "\\00_strike_craft.txt");
+            parser.ReadComponentSets(Specs.BASE_PATH + Specs.COMPONENT_SETS_POSTFIX);
             parser.ReadComponents(Specs.COMPONENT_PATH + "\\00_weapons_distant_stars.txt");
 
             var components = container.GetInstance<ComponentsList>();

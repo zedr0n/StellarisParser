@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using SimpleInjector;
 using StellarisParser.Core.Components;
@@ -94,55 +93,105 @@ namespace StellarisParser.Core
             var visitor = _container.GetInstance<IStellarisVisitor<T>>();
             return visitor.VisitContent(context);
         }
+
+        public bool ReadComponents(string path)
+        {
+            if (Directory.Exists(path))
+                return Directory.GetFiles(path).Aggregate(false, (current, file) => current | ReadComponents(file));
+
+            var isError = false;
+            try
+            {
+                CurrentSource = path;
+                _vars.Aggregate(RunVisitor<Variables>(File.ReadAllText(path)));
+                _componentsList.Aggregate(RunVisitor<ComponentsList>(File.ReadAllText(path)));
+            }
+            catch (Exception e)
+            {
+                isError = true;
+            }
+
+            return !isError;
+        }
+
+        public bool ReadComponentSets(string path)
+        {
+            if (Directory.Exists(path))
+                return Directory.GetFiles(path).Aggregate(false, (current, file) => current | ReadComponentSets(file));
+
+            var isError = false;
+            try
+            {
+                CurrentSource = path;
+                _componentSets.Aggregate(RunVisitor<ComponentSets>(File.ReadAllText(path)));
+            }
+            catch (Exception e)
+            {
+                isError = true;
+            }
+
+            return !isError;
+        }
+
+        public bool ReadTechs(string path)
+        {
+            if (Directory.Exists(path))
+                return Directory.GetFiles(path).Aggregate(false, (current, file) => current | ReadTechs(file));
+
+            var isError = false;
+            try
+            {
+                CurrentSource = path;
+                _vars.Aggregate(RunVisitor<Variables>(File.ReadAllText(path)));
+                _techsList.Aggregate(RunVisitor<TechsList>(File.ReadAllText(path)));
+            }
+            catch (Exception e)
+            {
+                isError = true;
+            }
+
+            return !isError;
+        }
+
+        public bool ReadVars(string path)
+        {
+            if (Directory.Exists(path))
+                return Directory.GetFiles(path).Aggregate(false, (current, file) => current | ReadVars(file));
+
+            var isError = false;
+            try
+            {
+                CurrentSource = path; 
+                _vars.Aggregate(RunVisitor<Variables>(File.ReadAllText(path)));
+
+            }
+            catch (Exception e)
+            {
+                isError = true;
+            }
+
+            return !isError;
+        }
         
-        public TechsList ReadFile(string filename, string baseVars = "")
+        public bool ReadLocalisation(string path)
         {
-            if (!File.Exists(filename))
-                return null;
+            if (Directory.Exists(path))
+                return Directory.GetFiles(path).Aggregate(false, (current, file) => current | ReadLocalisation(file));
 
-            if (baseVars != "" && File.Exists(baseVars))
-                ReadVars(baseVars);
-            
-            // run parser twice to process prerequisites
-            ReadTechs(filename);
-            return ReadTechs(filename);
-        }
+            var isError = false;
+            try
+            {
+                CurrentSource = path;
+                var parser = new YamlParser();
+                var localisation = parser.LoadYaml(path);
+                _localisation.Aggregate(localisation);
+            }
+            catch (Exception e)
+            {
+                isError = true;
+            }
 
-        public void ReadComponents(string file)
-        {
-            CurrentSource = file;
-            _vars.Aggregate(RunVisitor<Variables>(File.ReadAllText(file)));
-            _componentsList.Aggregate(RunVisitor<Components.ComponentsList>(File.ReadAllText(file)));
-        }
-
-        public void ReadComponentSets(string file)
-        {
-            CurrentSource = file;
-            _componentSets.Aggregate(RunVisitor<ComponentSets>(File.ReadAllText(file)));
-        }
-        
-        
-        public TechsList ReadTechs(string file)
-        {
-            CurrentSource = file;
-            _vars.Aggregate(RunVisitor<Variables>(File.ReadAllText(file)));
-            _techsList.Aggregate(RunVisitor<TechsList>(File.ReadAllText(file)));
-            return _techsList;
-            //_techs.Aggregate(RunVisitor<Techs>(File.ReadAllText(file)));
-        }
-
-        public void ReadVars(string file)
-        {
-            CurrentSource = file;
-            _vars.Aggregate(RunVisitor<Variables>(File.ReadAllText(file)));
-        }
-
-        public void ReadLocalisation(string file)
-        {
-            CurrentSource = file;
-            var parser = new YamlParser();
-            var localisation = parser.LoadYaml(file);
-            _localisation.Aggregate(localisation);
+            return !isError;
         }
         
         public void RunListeners(string text)
