@@ -10,13 +10,15 @@ namespace StellarisParser.Core.Techs
         private readonly TierVisitor _tierVisitor;
         private readonly CostVisitor _costVisitor;
         private readonly PrereqVisitor _prereqVisitor;
+        private readonly Localisation.Localisation _localisation;
 
-        public TechsListVisitor(Parser parser, AreaVisitor areaVisitor, TierVisitor tierVisitor, CostVisitor costVisitor, PrereqVisitor prereqVisitor)
+        public TechsListVisitor(Parser parser, AreaVisitor areaVisitor, TierVisitor tierVisitor, CostVisitor costVisitor, PrereqVisitor prereqVisitor, Localisation.Localisation localisation)
         {
             _areaVisitor = areaVisitor;
             _tierVisitor = tierVisitor;
             _costVisitor = costVisitor;
             _prereqVisitor = prereqVisitor;
+            _localisation = localisation;
             _parser = parser;
         }
         
@@ -52,12 +54,14 @@ namespace StellarisParser.Core.Techs
             
             var tech = new Tech
             {
-                Name = id,
+                Key = id,
                 Area = area,
                 Tier = tier,
                 Cost = (int) cost,
                 Prerequisites = prereqs?.ToList() ?? new List<Tech>(),
-                Source = source
+                Source = source,
+                Name = _localisation[id].Name,
+                Description = _localisation[id].Description
             };
 
             var techs = new TechsList();

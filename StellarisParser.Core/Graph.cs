@@ -38,6 +38,9 @@ namespace StellarisParser.Core
             
             [XmlAttribute("Label")]
             public string Label { get; set; }
+            
+            [XmlAttribute("Description")]
+            public string Description { get; set; }
 
             [XmlAttribute("Cost")]
             public double Cost { get; set; }
@@ -97,9 +100,19 @@ namespace StellarisParser.Core
             return source;
         }
 
-        private string GetTechName(string tech)
+        private string GetComponentName(Component component)
         {
-            return tech.Replace("tech_", string.Empty);
+            if (component.Name != string.Empty)
+                return component.Name;
+
+            return component.Key;
+        }
+
+        private string GetTechName(Tech tech)
+        {
+            if (tech.Name != string.Empty)
+                return tech.Name;
+            return tech.Key.Replace("tech_", string.Empty);
         }
 
         private bool AddComponent(Component component)
@@ -117,10 +130,15 @@ namespace StellarisParser.Core
 
             var thruster = component as Thruster;
             var shield = component as Shield;
+
+            if (_graph.Vertices.Any(t => t.Type == component.Type && t.Label == GetComponentName(component)))
+                return true;
+
             var vertex = new Vertex
             {
                 Id = component.Key,
                 Name = component.Key,
+                Description = component.Description,
                 Power = component.Power,
                 Type = component.Type,
                 Tier = tech?.Tier ?? 0,
@@ -129,7 +147,7 @@ namespace StellarisParser.Core
                 UpgradesTo = component.UpgradesTo?.Key,
                 Source = GetSource(component.Source),
                 SourcePath = component.Source.Replace("\\\\", "\\"),
-                Label = component.Key,
+                Label = GetComponentName(component),
                 Speed = thruster?.SpeedMultiplier ?? 0,
                 Evasion = thruster?.Evasion ?? 0,
                 ShieldRegen = shield?.ShieldRegen ?? 0,
@@ -142,14 +160,15 @@ namespace StellarisParser.Core
         
         private bool AddTech(Tech tech)
         {
-            if (_graph.Vertices.Any(t => t.Id == tech.Name))
+            if (_graph.Vertices.Any(t => t.Id == tech.Key))
                 return false;
 
             var vertex = new Vertex
             {
-                Id = tech.Name,
-                Name = tech.Name,
-                Label = $"[{tech.Tier}]{GetTechName(tech.Name)}",
+                Id = tech.Key,
+                Name = tech.Key,
+                Description = tech.Description,
+                Label = $"[{tech.Tier}]{GetTechName(tech)}",
                 Cost = tech.Cost,
                 Tier = tech.Tier,
                 Source = GetSource(tech.Source),
@@ -169,7 +188,7 @@ namespace StellarisParser.Core
 
         private Vertex GetVertex(Tech tech)
         {
-            return _graph.Vertices.SingleOrDefault(t => t.Id == tech.Name);
+            return _graph.Vertices.SingleOrDefault(t => t.Id == tech.Key);
         }
 
         public void Populate()
@@ -195,14 +214,16 @@ namespace StellarisParser.Core
                 foreach (var t in component.Prerequisites)
                 {
                     var edge = new SEdge<Vertex>(GetVertex(t), GetVertex(component));
-                    _graph.AddEdge(edge);
+                    if (edge.Source != null & edge.Target != null)
+                        _graph.AddEdge(edge);
                 }
 
                 if (component.UpgradesTo != null)
                 {
                     AddComponent(component.UpgradesTo);
                     var edge = new SEdge<Vertex>(GetVertex(component), GetVertex(component.UpgradesTo));
-                    _graph.AddEdge(edge);
+                    if (edge.Source != null && edge.Target != null)
+                        _graph.AddEdge(edge);
                 }
                 
             }

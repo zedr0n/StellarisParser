@@ -53,12 +53,6 @@ namespace StellarisParser.Core
         public const string BARRIER_SET = "barrier";
         
         public const string LIGHT_WALL_SET = "light_wall";
-        public const string LASER_SET = "laser";
-        public const string ENERGY_LANCE_SET = "energy_lance";
-        public const string PLASMA_SET = "plasma";
-        public const string ARC_EMITTER_SET = "arc_emitter";
-        public const string DISRUPTOR_SET = "disruptor";
-        public const string STRIKE_CRAFT_SET = "strike_craft";
         public const string WEAPON_TEMPLATE = "weapon_component_template";
         public const string STRIKE_CRAFT_TEMPLATE = "strike_craft_component_template";
 
@@ -68,6 +62,7 @@ namespace StellarisParser.Core
         public const string BASE_VARS = BASE_PATH + "\\common\\scripted_variables\\00_scripted_variables.txt";
         public const string BASE_VARS_DIR = BASE_PATH + "\\common\\scripted_variables";
         public const string TECH_PATH = BASE_PATH + "\\common\\technology";
+        public const string LOCALISATION_PATH = BASE_PATH + "\\localisation\\english";
         public const string COMPONENT_PATH = BASE_PATH + "\\common\\component_templates";
         public const string COMPONENT_SETS_POSTFIX = "\\common\\component_sets";
         public const string COMPONENT_SETS_PATH = BASE_PATH + COMPONENT_SETS_POSTFIX;

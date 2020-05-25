@@ -140,6 +140,8 @@ namespace StellarisParser.Core
                 typeof(UnknownVisitor),
                 typeof(AuraVisitor)
             });
+            
+            container.Register<Localisation.Localisation>(Lifestyle.Singleton);
         }
     }
 }

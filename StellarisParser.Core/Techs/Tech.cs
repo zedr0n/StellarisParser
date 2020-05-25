@@ -4,7 +4,9 @@ namespace StellarisParser.Core.Techs
 {
     public class Tech
     {
+        public string Key { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
 
         public string Area { get; set; }
         public int Tier { get; set; }

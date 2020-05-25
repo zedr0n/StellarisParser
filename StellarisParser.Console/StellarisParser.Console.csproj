@@ -9,4 +9,8 @@
       <ProjectReference Include="..\StellarisParser.Core\StellarisParser.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    </ItemGroup>
+
 </Project>

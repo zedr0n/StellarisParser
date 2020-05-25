@@ -22,13 +22,15 @@ namespace StellarisParser.Core.Components
         private readonly UpgradesToVisitor _upgradesToVisitor;
         private readonly ModifiersVisitor _modifiersVisitor;
         private readonly SizeVisitor _sizeVisitor;
+        private readonly Localisation.Localisation _localisation;
         
         private readonly Parser _parser;
         protected Specs.ComponentType ComponentType => new T().ComponentType;
 
         public ComponentVisitor(KeyVisitor keyVisitor, PowerVisitor powerVisitor, PrereqVisitor prereqVisitor,
             ComponentSetVisitor componentSetVisitor, UpgradesToVisitor upgradesToVisitor, Parser parser,
-            ComponentsList componentsList, ComponentSets componentSets, ModifiersVisitor modifiersVisitor, SizeVisitor sizeVisitor)
+            ComponentsList componentsList, ComponentSets componentSets, ModifiersVisitor modifiersVisitor,
+            SizeVisitor sizeVisitor, Localisation.Localisation localisation)
         {
             _keyVisitor = keyVisitor;
             _powerVisitor = powerVisitor;
@@ -38,6 +40,7 @@ namespace StellarisParser.Core.Components
             _componentSets = componentSets;
             _modifiersVisitor = modifiersVisitor;
             _sizeVisitor = sizeVisitor;
+            _localisation = localisation;
             _upgradesToVisitor = upgradesToVisitor;
             _componentSetVisitor = componentSetVisitor;
         }
@@ -69,6 +72,8 @@ namespace StellarisParser.Core.Components
             var modifiers = _modifiersVisitor.Visit(context.val());
 
             var component = new T();
+            component.Name = _localisation[key].Name;
+            component.Description = _localisation[key].Description;
             component.Key = key;
             component.Power = power;
             component.Source = source;

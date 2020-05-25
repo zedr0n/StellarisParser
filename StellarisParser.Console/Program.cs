@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 using SimpleInjector;
 using StellarisParser.Core;
+using StellarisParser.Core.Components;
+using StellarisParser.Core.Localisation;
+using StellarisParser.Core.Techs;
 using static StellarisParser.Core.Specs;
 
 namespace StellarisParser.Console
@@ -157,6 +161,25 @@ namespace StellarisParser.Console
                 }
             }
         }
+        
+        private static void ReadLocalisations(string directory)
+        {
+            foreach (var file in Directory.GetFiles(directory))
+            {
+                System.Console.Write("Reading " + file + "...");
+                try
+                {
+                    _parser.ReadLocalisation(file);
+                    //_vars.Aggregate(_parser.RunVisitor<Variables>(File.ReadAllText(file)));
+                    System.Console.WriteLine(" OK!");
+                }
+                catch (Exception )
+                {
+                    System.Console.WriteLine(" Error!");
+                }
+            }
+        }
+
 
         public static void ReadMod(string modDir)
         {
@@ -168,6 +191,10 @@ namespace StellarisParser.Console
                     var desc = _parser.RunVisitor<ModDescriptor>(File.ReadAllText(descriptor));
                     _mods.Map.Add(modDir, desc);
                 }
+
+                var localisationDir = modDir + "\\localisation\\english";
+                if (Directory.Exists(localisationDir))
+                    ReadLocalisations(localisationDir);
                 
                 var varsDir = modDir + "\\common\\scripted_variables";
                 if (Directory.Exists(varsDir))
@@ -203,6 +230,9 @@ namespace StellarisParser.Console
             //_parser.ReadVars(BASE_VARS);
             ReadVars(BASE_VARS_DIR);
 
+            System.Console.WriteLine("Reading localisation...");
+            ReadLocalisations(LOCALISATION_PATH);
+            
             System.Console.WriteLine("Reading base techs...");
             ReadAllTechs(TECH_PATH);
             System.Console.WriteLine("Reading base components...");
@@ -215,6 +245,19 @@ namespace StellarisParser.Console
             var graph = container.GetInstance<Graph>();
             graph.Populate();
             graph.Serialise("graph");
+            
+            // store json
+            var techList = container.GetInstance<TechsList>();
+            var techJson = JsonConvert.SerializeObject(techList.Map, Formatting.Indented);
+            File.WriteAllText(@"techs.json", techJson);
+
+            var componetList = container.GetInstance<ComponentsList>();
+            var componentJson = JsonConvert.SerializeObject(componetList.Map, Formatting.Indented);
+            File.WriteAllText(@"components.json", componentJson);
+
+            var localisationList = container.GetInstance<Localisation>();
+            var localisationJson = JsonConvert.SerializeObject(localisationList.Dictionary, Formatting.Indented);
+            File.WriteAllText(@"localisation.json", localisationJson);
         }
     }
 }

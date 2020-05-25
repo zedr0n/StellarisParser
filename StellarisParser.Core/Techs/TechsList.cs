@@ -21,7 +21,7 @@ namespace StellarisParser.Core.Techs
 
         public void Add(Tech tech)
         {
-            Map[tech.Name] = tech;
+            Map[tech.Key] = tech;
         }
 
         public int Count => Map.Count;

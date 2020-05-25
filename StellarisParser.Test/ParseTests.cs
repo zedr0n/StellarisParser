@@ -133,7 +133,7 @@ namespace StellarisParser.Test
             
             var tech = parser.RunVisitor<TechsList>(SolarPanelNetworks).Map.First().Value;
             
-            Assert.Equal("tech_solar_panel_network", tech.Name);
+            Assert.Equal("tech_solar_panel_network", tech.Key);
             Assert.Equal("engineering", tech.Area);
             Assert.Equal(0, tech.Tier);
         }
@@ -256,7 +256,7 @@ tech_solar_panel_network   = { area   = engineering    tier   = 0    category   
             
             Assert.Equal(82, techs.Count);
             var tech = techs["tech_destroyers"];
-            Assert.Equal("tech_corvettes", tech.Prerequisites.Single().Name);
+            Assert.Equal("tech_corvettes", tech.Prerequisites.Single().Key);
         }
 
         [Fact]

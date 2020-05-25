@@ -7,6 +7,7 @@ using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using SimpleInjector;
 using StellarisParser.Core.Components;
+using StellarisParser.Core.Localisation;
 using StellarisParser.Core.Techs;
 
 namespace StellarisParser.Core
@@ -49,6 +50,9 @@ namespace StellarisParser.Core
         private readonly TechsList _techsList;
         private readonly TechsModifier _techsModifier;
         private readonly ComponentsList _componentsList;
+
+        private readonly Localisation.Localisation _localisation;
+        
         public string CurrentSource { get; private set; }
 
 
@@ -133,6 +137,14 @@ namespace StellarisParser.Core
             _vars.Aggregate(RunVisitor<Variables>(File.ReadAllText(file)));
         }
 
+        public void ReadLocalisation(string file)
+        {
+            CurrentSource = file;
+            var parser = new YamlParser();
+            var localisation = parser.LoadYaml(file);
+            _localisation.Aggregate(localisation);
+        }
+        
         public void RunListeners(string text)
         {
             var inputStream = new AntlrInputStream(text);
@@ -149,7 +161,7 @@ namespace StellarisParser.Core
                 ParseTreeWalker.Default.Walk(listener, context);    
         }
 
-        public Parser(Container container, Variables vars, TechsList techsList, Components.ComponentsList componentsList, TechsModifier techsModifier, ComponentSets componentSets)
+        public Parser(Container container, Variables vars, TechsList techsList, Components.ComponentsList componentsList, TechsModifier techsModifier, ComponentSets componentSets, Localisation.Localisation localisation)
         {
             _container = container;
             _vars = vars;
@@ -157,6 +169,7 @@ namespace StellarisParser.Core
             _componentsList = componentsList;
             _techsModifier = techsModifier;
             _componentSets = componentSets;
+            _localisation = localisation;
         }
     }
 }
